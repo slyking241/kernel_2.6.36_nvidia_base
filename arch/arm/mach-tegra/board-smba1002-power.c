@@ -380,7 +380,13 @@ static struct virtual_adj_voltage_config vdd_aon_cfg = {
 
 /* FIXME: do we have rtc alarm irq? */
 static struct tps6586x_rtc_platform_data smba1002_rtc_data = {
-	.irq	= TEGRA_NR_IRQS + TPS6586X_INT_RTC_ALM1, 
+	.irq = TEGRA_NR_IRQS + TPS6586X_INT_RTC_ALM1,
+	.start = {
+	.year = 2009,
+	.month = 1,
+	.day = 1,
+           },
+        .cl_sel = TPS6586X_RTC_CL_SEL_1_5PF /* use lowest (external 20pF cap) */
 };
 
 static struct tps6586x_subdev_info tps_devs[] = {
@@ -397,11 +403,11 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_7, &ldo7_data),
 	TPS_ADJ_REG(LDO_8, &ldo8_data),
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
-	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
-	//TPS_ADJ_REG(LDO_SOC, &soc_data),
-	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
+	TPS_ADJ_REG(LDO_RTC, &rtc_data),
+	TPS_ADJ_REG(LDO_SOC, &soc_data),
+	TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
 	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
-	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
+	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),
 	{
 		.id		= -1,
 		.name		= "tps6586x-rtc",
@@ -583,16 +589,16 @@ struct platform_device tegra_rtc_device = {
 #endif
 
 static struct platform_device *smba1002_power_devices[] __initdata = {
-	//&smba1002_ldo_tps2051B_reg_device,
-	//&smba1002_vdd_aon_reg_device,
+	&smba1002_ldo_tps2051B_reg_device,
+	&smba1002_vdd_aon_reg_device,
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
 	&tegra_pmu_device,
 #else
 	&pmu_device,
 #endif
-	//&smba1002_nvec_mfd,
+	&smba1002_nvec_mfd,
 	&tegra_rtc_device,
-	//&smba1002_bq24610_device,
+	&smba1002_bq24610_device,
 };
 
 /* Init power management unit of Tegra2 */
