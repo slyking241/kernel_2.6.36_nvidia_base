@@ -598,7 +598,7 @@ static struct platform_device *smba1002_power_devices[] __initdata = {
 #endif
 	&smba1002_nvec_mfd,
 	&tegra_rtc_device,
-	&smba1002_bq24610_device,
+	//&smba1002_bq24610_device,
 };
 
 /* Init power management unit of Tegra2 */
