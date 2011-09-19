@@ -209,16 +209,16 @@ int __init smba1002_sdhci_register_devices(void)
 	tegra_sdhci_device3.dev.platform_data = &tegra_sdhci_platform_data3;
 	tegra_sdhci_device4.dev.platform_data = &tegra_sdhci_platform_data4;
 
-	/*
-	this here is noe done in kernel/drivers/mmc/host/sdhci-tegra.c
-        don't do that double, it breaks things!
+	
+	//this here is noe done in kernel/drivers/mmc/host/sdhci-tegra.c
+        //don't do that double, it breaks things!
 
 	gpio_request(tegra_sdhci_platform_data3.power_gpio, "sdhci3_power");
 	gpio_request(tegra_sdhci_platform_data3.cd_gpio, "sdhci3_cd");
 
 	gpio_direction_output(tegra_sdhci_platform_data3.power_gpio, 1);
 	gpio_direction_input(tegra_sdhci_platform_data3.cd_gpio);
-	*/
+	
 	
 	ret = platform_add_devices(smba1002_sdhci_devices, ARRAY_SIZE(smba1002_sdhci_devices));
 	smba1002_wifi_init();

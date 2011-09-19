@@ -475,12 +475,12 @@ return get_cfg_from_tags();
 __tagtable(ATAG_NVIDIA, parse_tag_nvidia);
 
 static atomic_t smba1002_3g_gps_powered = ATOMIC_INIT(0);
-void smba1002_3g_gps_poweron(void)
+/*void smba1002_3g_gps_poweron(void)
 {
 if (atomic_inc_return(&smba1002_3g_gps_powered) == 1) {
 pr_info("Enabling 3G/GPS module\n");
-/* 3G/GPS power on sequence */
-gpio_set_value(SHUTTLE_3GGPS_DISABLE, 0); /* Enable power */
+
+gpio_set_value(SHUTTLE_3GGPS_DISABLE, 0); 
 msleep(2);
 }
 }
@@ -490,8 +490,8 @@ void smba1002_3g_gps_poweroff(void)
 {
 if (atomic_dec_return(&smba1002_3g_gps_powered) == 0) {
 pr_info("Disabling 3G/GPS module\n");
-/* 3G/GPS power on sequence */
-gpio_set_value(SHUTTLE_3GGPS_DISABLE, 1); /* Disable power */
+
+gpio_set_value(SHUTTLE_3GGPS_DISABLE, 1); 
 msleep(2);
 }
 }
@@ -512,7 +512,7 @@ void smba1002_3g_gps_deinit(void)
 atomic_dec(&smba1002_3g_gps_inited);
 }
 EXPORT_SYMBOL_GPL(smba1002_3g_gps_deinit);
-
+*/
 static struct tegra_suspend_platform_data smba1002_suspend = {
 .cpu_timer = 2000, // 5000
 .cpu_off_timer = 0, // 5000
@@ -523,12 +523,12 @@ static struct tegra_suspend_platform_data smba1002_suspend = {
 .suspend_mode = TEGRA_SUSPEND_LP0,
 #if LINUX_VERSION_CODE <= KERNEL_VERSION(2,6,38) /* NB: 2.6.39+ handles this automatically */
 .separate_req = true,
-.wake_enb = SHUTTLE_WAKE_KEY_POWER |
-SHUTTLE_WAKE_KEY_RESUME |
+.wake_enb = SMBA1002_WAKE_KEY_POWER |
+SMBA1002_WAKE_KEY_RESUME |
 TEGRA_WAKE_RTC_ALARM,
 .wake_high = TEGRA_WAKE_RTC_ALARM,
-.wake_low = SHUTTLE_WAKE_KEY_POWER |
-SHUTTLE_WAKE_KEY_RESUME,
+.wake_low = SMBA1002_WAKE_KEY_POWER |
+SMBA1002_WAKE_KEY_RESUME,
 .wake_any = 0,
 #endif
 };
