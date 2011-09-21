@@ -473,9 +473,9 @@ sizeof(*dst), nvtag->bootarg_len);
 return get_cfg_from_tags();
 }
 __tagtable(ATAG_NVIDIA, parse_tag_nvidia);
-
+/*
 static atomic_t smba1002_3g_gps_powered = ATOMIC_INIT(0);
-/*void smba1002_3g_gps_poweron(void)
+void smba1002_3g_gps_poweron(void)
 {
 if (atomic_inc_return(&smba1002_3g_gps_powered) == 1) {
 pr_info("Enabling 3G/GPS module\n");
@@ -542,14 +542,14 @@ tegra_common_init();
 #endif
 
 /* force consoles to stay enabled across suspend/resume */
-// console_suspend_enabled = 0;
+console_suspend_enabled = 0;
 
 /* Init the suspend information */
 tegra_init_suspend(&smba1002_suspend);
 
 /* Set the SDMMC2 (wifi) tap delay to 6. This value is determined
 * based on propagation delay on the PCB traces. */
-clk = clk_get_sys("sdhci-tegra.1", NULL);
+clk = clk_get_sys("sdhci-tegra.0", NULL);
 if (!IS_ERR(clk)) {
 tegra_sdmmc_tap_delay(clk, 6);
 clk_put(clk);

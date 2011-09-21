@@ -54,7 +54,7 @@ static struct wifi_platform_data smba1002_wifi_control = {
 
 
 static struct platform_device smba1002_wifi_device = {
-        .name           = "brcmfmac",
+        .name           = "bcm4329_wlan",
         .id             = 1,
         .dev            = {
                 .platform_data = &smba1002_wifi_control,
@@ -82,6 +82,7 @@ static int smba1002_wifi_status_register(
 struct tegra_sdhci_platform_data smba1002_wlan_data = {
         .clk_id = NULL,
         .force_hs = 0,
+	.is_8bit = 0,
         .register_status_notify = smba1002_wifi_status_register,
         .cccr   = {
                 .sdio_vsn       = 2,
@@ -117,6 +118,8 @@ int smba1002_wifi_set_carddetect(int val)
 	}
 	return 0;
 }
+
+
 
 static int smba1002_wifi_power(int on)
 {
@@ -222,8 +225,7 @@ int __init smba1002_sdhci_register_devices(void)
 	
 	ret = platform_add_devices(smba1002_sdhci_devices, ARRAY_SIZE(smba1002_sdhci_devices));
 	smba1002_wifi_init();
+	return ret;
 	printk(KERN_INFO "SPucki wants powerup after init!\n");
         smba1002_wifi_power(1); 
-	return ret;
-
 }

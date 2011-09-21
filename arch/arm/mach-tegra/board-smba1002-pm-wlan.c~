@@ -105,7 +105,7 @@ static int smba1002_wlan_set_carddetect(struct device *dev,int val)
 	__smba1002_pm_wlan_toggle_radio(dev,val);
 	
 	/* notify the SDIO layer of the CD change */
-	shuttle_wifi_set_cd(val);
+	smba1002_wifi_set_cd(val);
 	return 0;
 } 
 
