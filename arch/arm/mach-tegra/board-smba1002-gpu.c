@@ -188,7 +188,7 @@ static struct tegra_fb_data smba1002_fb_data = {
 	.win		= 0,
 	.xres		= 1024,
 	.yres		= 600,
-	.bits_per_pixel	= 32,
+	.bits_per_pixel	= 16,
 };
 
 #if defined(SMBA1002_1920x1080HDMI)
