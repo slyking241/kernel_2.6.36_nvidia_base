@@ -33,6 +33,10 @@
 /* #define SMBA1002_EMC_ELPIDA50NM	*/
 /* #define SMBA1002_EMC_ELPIDA40NM	*/
 
+
+#define ALC5623_GPIO_BASE (TEGRA_NR_GPIOS + 16)
+#define ALC5623_GP0 (ALC5623_GPIO_BASE)
+
 #define SMBA1002_CAMERA_POWER 	TEGRA_GPIO_PBB5 /* 1=powered on */
 #define SMBA1002_CAMERA_ROTATION	TEGRA_GPIO_PX7
 
@@ -124,6 +128,7 @@ extern void smba1002_clks_init(void);
 
 extern int smba1002_usb_register_devices(void);
 extern int smba1002_audio_register_devices(void);
+extern int smba1002_jack_register_devices(void);
 extern int smba1002_gpu_register_devices(void);
 extern int smba1002_uart_register_devices(void);
 extern int smba1002_spi_register_devices(void);
