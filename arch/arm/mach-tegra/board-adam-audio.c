@@ -47,7 +47,6 @@
 #endif
 
 #include <mach/system.h>
-#include <mach/adam_audio.h>
 
 #include "board.h"
 #include "board-adam.h"
@@ -251,8 +250,21 @@ static struct alc5623_platform_data alc5623_pdata = {
 	.linevdd_mv 	= 5000,	/* Line Vdd in millivolts */
 //	.spkvdd_mv 	= 5000,	/* Speaker Vdd in millivolts */
 //	.hpvdd_mv 	= 3300,	/* Headphone Vdd in millivolts */
-	.add_ctrl	= 0,
+	.add_ctrl	= 0xD300,
 	.jack_det_ctrl	= 0,
+	.gpio_base	= ALC5623_GPIO_BASE,
+};
+
+static struct platform_device alc5623_gpio = {
+	.name = "alc5623-gpio",
+	.id   = 0,
+	.dev = {
+		.platform_data = &alc5623_pdata,
+	}, 
+};
+
+static struct platform_device *adam_gpios[] __initdata = {
+	&alc5623_gpio,
 };
 
 static struct i2c_board_info __initdata adam_i2c_bus0_board_info[] = {
@@ -262,16 +274,9 @@ static struct i2c_board_info __initdata adam_i2c_bus0_board_info[] = {
 	},
 };
 
-static struct adam_audio_platform_data adam_audio_pdata = {
-	.gpio_hp_det = ADAM_HP_DETECT,
-}; 
-
 static struct platform_device adam_audio_device = {
 	.name = "tegra-snd-adam",
 	.id   = 0,
-	.dev = {
-		.platform_data = &adam_audio_pdata,
-	}, 
 };
 
 static struct platform_device spdif_dit_device = {
@@ -310,6 +315,11 @@ int __init adam_audio_register_devices(void)
 		ARRAY_SIZE(adam_i2c_bus0_board_info)); 
 	if (ret)
 		return ret;
+	
+	ret = platform_add_devices(adam_gpios, ARRAY_SIZE(adam_gpios));
+	if (ret)
+		return ret;
+
 	return platform_add_devices(adam_i2s_devices, ARRAY_SIZE(adam_i2s_devices));
 }
 

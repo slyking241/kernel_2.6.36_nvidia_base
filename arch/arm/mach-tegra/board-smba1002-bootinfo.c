@@ -37,7 +37,6 @@
 #include <mach/io.h>
 #include <mach/iomap.h>
 #include <mach/system.h>
-#include <mach/smba1002_audio.h>
 
 #include "board.h"
 #include "board-smba1002.h"
