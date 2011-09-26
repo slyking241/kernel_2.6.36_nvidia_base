@@ -175,11 +175,11 @@ static void __init tegra_adam_init(void)
 		pr_err("Failed to set wifi sdmmc tap delay\n");
 	}
 
-	/* Initialize the clocks */
-	adam_clks_init();
-
 	/* Initialize the pinmux */
 	adam_pinmux_init();
+
+	/* Initialize the clocks - clocks require the pinmux to be initialized first */
+	adam_clks_init();
 
 	/* Register i2c devices - required for Power management and MUST be done before the power register */
 	adam_i2c_register_devices();
@@ -201,6 +201,9 @@ static void __init tegra_adam_init(void)
 
 	/* Register Audio devices */
 	adam_audio_register_devices();
+
+	/* Register Jack devices */
+	adam_jack_register_devices();
 
 	/* Register AES encryption devices */
 	adam_aes_register_devices();
