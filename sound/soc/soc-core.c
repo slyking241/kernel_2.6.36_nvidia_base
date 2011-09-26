@@ -1784,7 +1784,8 @@ int snd_soc_add_controls(struct snd_soc_codec *codec,
 {
 	struct snd_card *card = codec->card;
 	if (snd_BUG_ON(!card))
-	  return -EINVAL;
+		return -EINVAL;
+
 	int err, i;
 
 	for (i = 0; i < num_controls; i++) {
