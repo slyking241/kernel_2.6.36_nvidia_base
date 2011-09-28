@@ -76,7 +76,7 @@ static struct tegra_das_platform_data tegra_das_pdata = {
             .device_property = {
                 .num_channels = 2,
                 .bits_per_sample = 16,
-#ifdef ADAM_48KHZ_AUDIO
+#ifdef SMBA1002_48KHZ_AUDIO
                 .rate = 48000,
 #else
                 .rate = 44100,
@@ -188,7 +188,7 @@ static struct tegra_das_platform_data tegra_das_pdata = {
 static struct tegra_audio_platform_data tegra_spdif_pdata = {
     .dma_on = true, /* use dma by default */
 #if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
-#ifdef ADAM_48KHZ_AUDIO
+#ifdef SMBA1002_48KHZ_AUDIO
     .dev_clk_rate = 6144000,
 #else
     .dev_clk_rate = 5644800,
@@ -211,7 +211,7 @@ static struct tegra_audio_platform_data tegra_audio_pdata[] = {
 #else
         .i2s_master = true, /* CODEC is slave for audio */
         .dma_on = true, /* use dma by default */
-#ifdef ADAM_48KHZ_AUDIO
+#ifdef SMBA1002_48KHZ_AUDIO
         .i2s_master_clk = 48000,
         .dev_clk_rate = 12288000,
 #else
@@ -250,6 +250,7 @@ static struct alc5623_platform_data alc5623_pdata = {
     .mclk = "cdev1",
 #endif
     .linevdd_mv = 5000, /* Line Vdd in millivolts */
+    .linevol_scale=80,
 // .spkvdd_mv = 5000, /* Speaker Vdd in millivolts */
 // .hpvdd_mv = 3300, /* Headphone Vdd in millivolts */
     .add_ctrl = 0xD300,

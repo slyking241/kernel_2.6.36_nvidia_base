@@ -47,7 +47,7 @@
 #include <mach/gpio.h>
 #include <mach/clk.h>
 #include <mach/usb_phy.h>
-#include <mach/i2s.h>
+#include <mach/tegra2_i2s.h>
 #include <mach/system.h>
 #include <mach/nvmap.h>
 
@@ -104,7 +104,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "pll_a", "pll_p_out1", 73728000, true}, /* always on - audio clocks */
     { "pll_a_out0", "pll_a", 18432000, true}, /* always on - i2s audio */
 #else
-# ifdef ADAM_48KHZ_AUDIO
+# ifdef SMBA1002_48KHZ_AUDIO
     { "pll_a", "pll_p_out1", 73728000, true}, /* always on - audio clocks */
     { "pll_a_out0", "pll_a", 12288000, true}, /* always on - i2s audio */
 # else
@@ -165,7 +165,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "spdif_in", "pll_p", 36000000, true},
     { "spdif_out", "pll_a_out0", 6144000, true},
 #else
-# ifdef ADAM_48KHZ_AUDIO
+# ifdef SMBA1002_48KHZ_AUDIO
     { "i2s1", "pll_a_out0", 12288000, true}, /* i2s.0 */
     { "i2s2", "pll_a_out0", 12288000, true}, /* i2s.1 */
     { "audio", "pll_a_out0", 12288000, true},
@@ -195,7 +195,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 // { CDEV1, NULL, 18432000, false}, /* used as audio CODEC MCLK */
     { CDEV1, NULL, 0, false}, /* used as audio CODEC MCLK */
 #else
-# ifdef ADAM_48KHZ_AUDIO
+# ifdef SMBA1002_48KHZ_AUDIO
 // { CDEV1, NULL /*"pll_a_out0"*/,12288000, false}, /* used as audio CODEC MCLK */
     { CDEV1, NULL /*"pll_a_out0"*/,0, false}, /* used as audio CODEC MCLK */
 # else
