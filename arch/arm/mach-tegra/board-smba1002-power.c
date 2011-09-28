@@ -265,33 +265,33 @@ static struct regulator_consumer_supply fixed_vdd_aon_supply[] = {
 
 	
 static struct regulator_init_data sm0_data  		 
-	= ADJ_REGULATOR_INIT(sm0,  625, 2700, 1, 1); // 1200
+	= ADJ_REGULATOR_INIT(sm0,  725, 1500, 1, 1); // 1200
 static struct regulator_init_data sm1_data  		 
-	= ADJ_REGULATOR_INIT(sm1,  625, 2700, 1, 1); // 1000 (min was 1100)
+	= ADJ_REGULATOR_INIT(sm1,  725, 1500, 1, 1); // 1000 (min was 1100)
 static struct regulator_init_data sm2_data  		 
 	= ADJ_REGULATOR_INIT(sm2, 3000, 4550, 1, 1); // 3700
 static struct regulator_init_data ldo0_data 		 
-	= ADJ_REGULATOR_INIT(ldo0,1250, 3350, 0, 0); // 3300
+	= ADJ_REGULATOR_INIT(ldo0,1250, 3300, 0, 0); // 3300
 static struct regulator_init_data ldo1_data 		 
 	= ADJ_REGULATOR_INIT(ldo1, 725, 1500, 1, 1); // 1100  V-1V2
 static struct regulator_init_data ldo2_data 		 
 	= ADJ_REGULATOR_INIT(ldo2, 725, 1500, 1, 1); // 1200  V-RTC
 static struct regulator_init_data ldo3_data 		 
-	= ADJ_REGULATOR_INIT(ldo3,1250, 3350, 0, 0); // 3300 
+	= ADJ_REGULATOR_INIT(ldo3,1250, 3300, 0, 0); // 3300 
 static struct regulator_init_data ldo4_data 		 
-	= ADJ_REGULATOR_INIT(ldo4,1700, 2000, 0, 0); // 1800
+	= ADJ_REGULATOR_INIT(ldo4,1700, 2000, 1, 1); // 1800
 static struct regulator_init_data ldo5_data 		 
-	= ADJ_REGULATOR_INIT(ldo5,1250, 3350, 0, 1); // 2850
+	= ADJ_REGULATOR_INIT(ldo5,1250, 3300, 1, 1); // 2850
 static struct regulator_init_data ldo6_data 		 
-	= ADJ_REGULATOR_INIT(ldo6,1250, 3350, 0, 1); // 2850  V-3V3 USB
+	= ADJ_REGULATOR_INIT(ldo6,1250, 3300, 1, 1); // 2850  V-3V3 USB
 static struct regulator_init_data ldo7_data 		 
-	= ADJ_REGULATOR_INIT(ldo7,1250, 3350, 0, 0); // 3300  V-SDIO
+	= ADJ_REGULATOR_INIT(ldo7,1250, 3300, 0, 0); // 3300  V-SDIO
 static struct regulator_init_data ldo8_data 		 
-	= ADJ_REGULATOR_INIT(ldo8,1250, 3350, 1, 1); // 1800  V-2V8
+	= ADJ_REGULATOR_INIT(ldo8,1250, 3300, 0, 0); // 1800  V-2V8
 static struct regulator_init_data ldo9_data 		 
-	= ADJ_REGULATOR_INIT(ldo9,1250, 3350, 0, 1); // 2850
+	= ADJ_REGULATOR_INIT(ldo9,1250, 3300, 1, 1); // 2850
 static struct regulator_init_data rtc_data  		 
-	= ADJ_REGULATOR_INIT(rtc, 1250, 3350, 0, 1); // 3300
+	= ADJ_REGULATOR_INIT(rtc, 1250, 3350, 1, 1); // 3300
 /*static struct regulator_init_data buck_data 
 	= ADJ_REGULATOR_INIT(buck,1250, 3350, 0, 0); // 3300*/
 	
@@ -403,11 +403,11 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_7, &ldo7_data),
 	TPS_ADJ_REG(LDO_8, &ldo8_data),
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
-	TPS_ADJ_REG(LDO_RTC, &rtc_data),
-	TPS_ADJ_REG(LDO_SOC, &soc_data),
-	TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
+	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
+	//TPS_ADJ_REG(LDO_SOC, &soc_data),
+	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
 	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
-	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),
+	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
 	{
 		.id		= -1,
 		.name		= "tps6586x-rtc",
@@ -589,8 +589,8 @@ struct platform_device tegra_rtc_device = {
 #endif
 
 static struct platform_device *smba1002_power_devices[] __initdata = {
-	&smba1002_ldo_tps2051B_reg_device,
-	&smba1002_vdd_aon_reg_device,
+	//&smba1002_ldo_tps2051B_reg_device,
+	//&smba1002_vdd_aon_reg_device,
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
 	&tegra_pmu_device,
 #else

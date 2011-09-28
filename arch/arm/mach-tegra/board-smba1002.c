@@ -556,12 +556,11 @@ clk_put(clk);
 } else {
 pr_err("Failed to set wifi sdmmc tap delay\n");
 }
+/* Initialize the pinmux */
+smba1002_pinmux_init();
 
 /* Initialize the clocks */
 smba1002_clks_init();
-
-/* Initialize the pinmux */
-smba1002_pinmux_init();
 
 /* Register i2c devices - required for Power management and MUST be done before the power register */
 smba1002_i2c_register_devices();
