@@ -251,8 +251,8 @@ static struct alc5623_platform_data alc5623_pdata = {
 #endif
     .linevdd_mv = 5000, /* Line Vdd in millivolts */
     .linevol_scale=80,
-// .spkvdd_mv = 5000, /* Speaker Vdd in millivolts */
-// .hpvdd_mv = 3300, /* Headphone Vdd in millivolts */
+ // .spkvdd_mv = 3300, /* Speaker Vdd in millivolts */
+ // .hpvdd_mv = 3300, /* Headphone Vdd in millivolts */
     .add_ctrl = 0xD300,
     .jack_det_ctrl = 0,
     .gpio_base = ALC5623_GPIO_BASE,
