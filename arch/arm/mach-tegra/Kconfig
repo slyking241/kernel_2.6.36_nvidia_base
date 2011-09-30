@@ -106,6 +106,7 @@ config TEGRA_FIQ_DEBUGGER
 	  Enables the FIQ serial debugger on Tegra"
 
 source "arch/arm/mach-tegra/nv/Kconfig"
+source "arch/arm/mach-tegra/config-peek-module-src/Kconfig"
 
 endif
 

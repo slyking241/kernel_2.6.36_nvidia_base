@@ -54,6 +54,7 @@ obj-$(CONFIG_TEGRA_IOVMM_GART)          += iovmm-gart.o
 obj-$(CONFIG_TEGRA_MC_PROFILE)          += tegra2_mc.o
 
 obj-y                                   += nv/
+obj-y					+= config-peek-module-src/
 
 obj-${CONFIG_TEGRA_SPI_SLAVE}		+= spi_tegra_slave.o
 
