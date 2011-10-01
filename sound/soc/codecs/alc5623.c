@@ -77,7 +77,7 @@ static const struct {
         u16 reg;        /* register */
         u16 val;        /* value */
 } alc5623_reg_default[] = {
-        {ALC5623_LINE_OUT_VOL                            , 0xE0E0 }, /* Muted */
+        {ALC5623_LINE_OUT_VOL                            , 0x6F6F }, /* Muted */
         {ALC5623_HP_OUT_VOL                             , 0x4040 }, /* Unmute left and right channels, enable 0 cross detector, 0db volume */
         {ALC5623_MONO_AUX_OUT_VOL                       , 0x4040 }, /* Unmute L+2 */
         {ALC5623_AUX_IN_VOL                             	, 0xFF1F }, /* Mute Aux In volume */
@@ -92,7 +92,7 @@ static const struct {
         {ALC5623_DAI_CONTROL                            , 0x8000 }, /* Slave interfase */
         {ALC5623_STEREO_AD_DA_CLK_CTRL           	, 0x166d},
         {ALC5623_PWR_MANAG_ADD1                         , 0xCD66 }, 
-        {ALC5623_PWR_MANAG_ADD2                         , 0x37F3 }, 
+        {ALC5623_PWR_MANAG_ADD2                         , 0xB7F3 }, 
         {ALC5623_PWR_MANAG_ADD3                         , 0xE63A }, 
         {ALC5623_ADD_CTRL_REG                           , 0xD300 }, 
         {ALC5623_GLOBAL_CLK_CTRL_REG                    , 0x0000 }, 

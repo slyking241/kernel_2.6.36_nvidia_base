@@ -234,7 +234,7 @@ static struct tegra_gpio_table gpio_table[] = {
 	{ .gpio = SMBA1002_WLAN_RESET,		.enable = true },
 	{ .gpio = SMBA1002_LOW_BATT,		.enable = true },
 	{ .gpio = SMBA1002_IN_S3,			.enable = true },
-/*	{ .gpio = SMBA1002_USB1_RESET,		.enable = true },*/
+	{ .gpio = SMBA1002_USB1_RESET,		.enable = true },
 	{ .gpio = SMBA1002_HP_DETECT,		.enable = true },
 };
 

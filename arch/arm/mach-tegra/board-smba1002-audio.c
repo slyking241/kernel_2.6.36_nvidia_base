@@ -250,7 +250,6 @@ static struct alc5623_platform_data alc5623_pdata = {
     .mclk = "cdev1",
 #endif
     .linevdd_mv = 5000, /* Line Vdd in millivolts */
-    .linevol_scale = 80,
 // .spkvdd_mv = 5000, /* Speaker Vdd in millivolts */
 // .hpvdd_mv = 3300, /* Headphone Vdd in millivolts */
     .add_ctrl = 0xD300,
