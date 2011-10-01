@@ -622,7 +622,7 @@ int __init smba1002_power_register_devices(void)
 	pm_power_off = smba1002_power_off;		
 	 
 		/* And the restart callback */
-	tegra_setup_reboot();
+	//tegra_setup_reboot();
 
 	/* signal that power regulators have fully specified constraints */
 	//regulator_has_full_constraints();
