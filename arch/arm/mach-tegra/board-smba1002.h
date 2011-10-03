@@ -57,15 +57,24 @@
 
 // smba1002 memory is 2xSZ_512M
 #define SMBA1002_MEM_SIZE 		SZ_512M			/* Total memory */
-#define SMBA1002_MEM_BANKS		1
 
-#define SMBA1002_GPU_MEM_SIZE 		SZ_128M		/* Memory reserved for GPU */
-//#define SMBA1002_GPU_MEM_SIZE 	SZ_64M			/* Memory reserved for GPU */
+/*#define SMBA1002_GPU_MEM_SIZE 	SZ_128M*/		/* Memory reserved for GPU */
+/*#define SMBA1002_GPU_MEM_SIZE 	SZ_64M*/		/* Memory reserved for GPU */
+#define SMBA1002_GPU_MEM_SIZE 	(3*SZ_32M)		/* Memory reserved for GPU */
 
 #define SMBA1002_FB1_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 1: LCD */
 #define SMBA1002_FB2_MEM_SIZE 	SZ_8M			/* Memory reserved for Framebuffer 2: HDMI out */
 
 #define DYNAMIC_GPU_MEM 1						/* use dynamic memory for GPU */
+
+#define SMBA1002_1024x600PANEL1 /* The smba1002 default panel */
+
+/* maximum allowed HDMI resolution */
+
+#define SMBA1002_1280x720HDMI
+
+
+/*#define SMBA1002_48KHZ_AUDIO*/ /* <- define this if you want 48khz audio sampling rate instead of 44100Hz */
 
 // TPS6586x GPIOs as registered 
 #define PMU_GPIO_BASE		(TEGRA_NR_GPIOS) 
@@ -147,5 +156,15 @@ extern int smba1002_bt_pm_register_devices(void);
 extern int smba1002_nand_register_devices(void);
 extern int smba1002_camera_register_devices(void);
 
+/* Autocalculate framebuffer sizes */
+
+#define TEGRA_ROUND_ALLOC(x) (((x) + 4095) & ((unsigned)(-4096)))
+/*Framebuffer Size for default Gtablet Panel*/
+#define SMBA1002_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(16/8)*SMBA1002_FB_PAGES)
+/*Frambuffer size for 720p HDMI Framebuffer Output*/
+#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(32/8)*2)
+
+
 #endif
 
+/*Limiting Frambuffers to Default Panel and 720p memory output.  Check board-shuttle.h for other options*/

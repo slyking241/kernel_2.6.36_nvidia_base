@@ -32,6 +32,7 @@
 #include <mach/iomap.h>
 #include <mach/dc.h>
 #include <mach/fb.h>
+#include <mach/tegra_cpufreq.h>
 
 #include "board.h"
 #include "devices.h"
@@ -72,9 +73,9 @@ static int smba1002_backlight_notify(struct device *unused, int brightness)
 	return brightness;
 }
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
 static int smba1002_disp1_check_fb(struct device *dev, struct fb_info *info);
-#endif
+//#endif
 
 static struct platform_pwm_backlight_data smba1002_backlight_data = {
 	.pwm_id		= SMBA1002_BL_PWM_ID,
@@ -84,10 +85,10 @@ static struct platform_pwm_backlight_data smba1002_backlight_data = {
 	.init		= smba1002_backlight_init,
 	.exit		= smba1002_backlight_exit,
 	.notify		= smba1002_backlight_notify,
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
 	/* Only toggle backlight on fb blank notifications for disp1 */
 	.check_fb	= smba1002_disp1_check_fb,
-#endif
+//#endif
 };
 
 static struct platform_device smba1002_panel_bl_driver = {
@@ -161,12 +162,12 @@ static int smba1002_hdmi_disable(void)
 	return 0;
 }
 
-#define TEGRA_ROUND_ALLOC(x) (((x) + 4095) & ((unsigned)(-4096)))
+//#define TEGRA_ROUND_ALLOC(x) (((x) + 4095) & ((unsigned)(-4096)))
 
 /* If using 1024x600 panel (Shuttle default panel) */
 
 /* Frame buffer size assuming 16bpp color */
-#define SMBA1002_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(16/8)*SMBA1002_FB_PAGES)
+//#define SMBA1002_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(16/8)*SMBA1002_FB_PAGES)
 
 static struct tegra_dc_mode smba1002_panel_modes[] = {
 	{
@@ -191,35 +192,41 @@ static struct tegra_fb_data smba1002_fb_data = {
 	.bits_per_pixel	= 16,
 };
 
-#if defined(SMBA1002_1920x1080HDMI)
+//#if defined(SMBA1002_1920x1080HDMI)
 
 /* Frame buffer size assuming 16bpp color and 2 pages for page flipping */
-#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(16/8)*2)
+//#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(16/8)*2)
 
-static struct tegra_fb_data smba1002_hdmi_fb_data = {
-	.win		= 0,
-	.xres		= 1920,
-	.yres		= 1080,
-	.bits_per_pixel	= 16,
-};
+//static struct tegra_fb_data smba1002_hdmi_fb_data = {
+//	.win		= 0,
+//	.xres		= 1920,
+//	.yres		= 1080,
+//	.bits_per_pixel	= 16,
+//};
 
-#else
+//#else
 
-#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(16/8)*2)
+//#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(16/8)*2)
 
 static struct tegra_fb_data smba1002_hdmi_fb_data = {
 	.win		= 0,
 	.xres		= 1280,
 	.yres		= 720,
-	.bits_per_pixel	= 16,
+	.bits_per_pixel	= 32,
 };
-#endif
+//#endif
 
 static struct tegra_dc_out smba1002_disp1_out = {
 	.type		= TEGRA_DC_OUT_RGB,
 
 	.align		= TEGRA_DC_ALIGN_MSB,
 	.order		= TEGRA_DC_ORDER_RED_BLUE,
+	.depth		= 18,
+	
+	 /* Enable dithering. Tegra also supports error
+		diffusion, but when the active region is less
+		than 640 pixels wide. */
+	.dither		= TEGRA_DC_ORDERED_DITHER,
 
 	.height 	= 136, /* mm */
 	.width 		= 217, /* mm */
@@ -324,12 +331,12 @@ static struct nvhost_device smba1002_disp1_device = {
 	},
 };
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
+//#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
 static int smba1002_disp1_check_fb(struct device *dev, struct fb_info *info)
 {
 	return info->device == &smba1002_disp1_device.dev;
 }
-#endif
+//#endif
 
 static struct nvhost_device smba1002_disp2_device = {
 	.name		= "tegradc",
