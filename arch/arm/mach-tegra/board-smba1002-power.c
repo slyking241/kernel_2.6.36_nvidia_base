@@ -589,14 +589,14 @@ struct platform_device tegra_rtc_device = {
 #endif
 
 static struct platform_device *smba1002_power_devices[] __initdata = {
-//	&smba1002_ldo_tps2051B_reg_device,
-//	&smba1002_vdd_aon_reg_device,
+	&smba1002_ldo_tps2051B_reg_device,
+	&smba1002_vdd_aon_reg_device,
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
 	&tegra_pmu_device,
 #else
 	&pmu_device,
 #endif
-	//&smba1002_nvec_mfd,
+	&smba1002_nvec_mfd,
 	&tegra_rtc_device,
 	//&smba1002_bq24610_device,
 };
@@ -605,14 +605,14 @@ static struct platform_device *smba1002_power_devices[] __initdata = {
 int __init smba1002_power_register_devices(void)
 {
 	int err;
-	//void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
-	//u32 pmc_ctrl;
+	void __iomem *pmc = IO_ADDRESS(TEGRA_PMC_BASE);
+	u32 pmc_ctrl;
 
 	/* configure the power management controller to trigger PMU
 	 * interrupts when low
 	 */
-	//pmc_ctrl = readl(pmc + PMC_CTRL);
-	//writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
+	pmc_ctrl = readl(pmc + PMC_CTRL);
+	writel(pmc_ctrl | PMC_CTRL_INTR_LOW, pmc + PMC_CTRL);
 
 	err = i2c_register_board_info(4, smba1002_regulators, 1);
 	if (err < 0) 
