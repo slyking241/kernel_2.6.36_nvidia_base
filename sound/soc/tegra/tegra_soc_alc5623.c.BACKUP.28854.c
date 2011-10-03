@@ -1,23 +1,21 @@
 /*
- * tegra_soc_alc5623.c  --  SoC audio for tegra (glue logic)
- *
- * (c) 2010-2011 Nvidia Graphics Pvt. Ltd.
- *  http://www.nvidia.com
- * (C) 2011 Eduardo José Tagle <ejtagle@tutopia.com>
- *
- * Copyright 2007 Wolfson Microelectronics PLC.
- * Author: Graeme Gregory
- *         graeme.gregory@wolfsonmicro.com or linux@wolfsonmicro.com
- *
- *  This program is free software; you can redistribute  it and/or modify it
- *  under  the terms of  the GNU General  Public License as published by the
- *  Free Software Foundation;  either version 2 of the  License, or (at your
- *  option) any later version.
- *
- */
- 
+* tegra_soc_alc5623.c -- SoC audio for tegra (glue logic)
+*
+* (c) 2010-2011 Nvidia Graphics Pvt. Ltd.
+* http://www.nvidia.com
+* (C) 2011 Eduardo José Tagle <ejtagle@tutopia.com>
+*
+* Copyright 2007 Wolfson Microelectronics PLC.
+* Author: Graeme Gregory
+* graeme.gregory@wolfsonmicro.com or linux@wolfsonmicro.com
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by the
+* Free Software Foundation; either version 2 of the License, or (at your
+* option) any later version.
+*
+*/
 /* #define DEBUG */
- 
 #include "tegra_soc.h"
 #include <sound/alc5623-registers.h>
 #include <sound/soc-dapm.h>
@@ -47,13 +45,13 @@ extern struct snd_soc_codec_device soc_codec_dev_alc5623;
 
 /* mclk required for each sampling frequency */
 static const struct {
-	unsigned int mclk;
-	unsigned short srate;
+unsigned int mclk;
+unsigned short srate;
 } clocktab[] = {
         /* 8k */
-        { 8192000,  8000},
-        {12288000,  8000},
-        {24576000,  8000},
+        { 8192000, 8000},
+        {12288000, 8000},
+        {24576000, 8000},
 
         /* 11.025k */
         {11289600, 11025},
@@ -88,14 +86,23 @@ static const struct {
 /* --------- Digital audio interfase ------------ */
 
 static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
-					struct snd_pcm_hw_params *params)
+struct snd_pcm_hw_params *params)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+struct snd_soc_pcm_runtime *rtd = substream->private_data;
+struct snd_soc_dai *codec_dai = rtd->dai->codec_dai;
+struct snd_soc_dai *cpu_dai = rtd->dai->cpu_dai;
+struct snd_soc_codec *codec = codec_dai->codec;
+int dai_flag = 0, sys_clk, codec_is_master;
+=======
 	pr_info("%s++", __func__);
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct snd_soc_dai *codec_dai 	= rtd->dai->codec_dai;
 	struct snd_soc_dai *cpu_dai 	= rtd->dai->cpu_dai;
 	struct snd_soc_codec *codec = codec_dai->codec;	
 	int dai_flag = 0, sys_clk, codec_is_master;
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         unsigned int srate, value;
         int i, err;
         enum dac_dap_data_format data_fmt;
@@ -103,36 +110,36 @@ static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
         /* Get the requested sampling rate */
         srate = params_rate(params);
 
-	/* I2S <-> DAC <-> DAS <-> DAP <-> CODEC
-	   -If DAP is master, codec will be slave */
-	codec_is_master = !tegra_das_is_port_master(tegra_audio_codec_type_hifi);
-	if (codec_is_master)
+/* I2S <-> DAC <-> DAS <-> DAP <-> CODEC
+-If DAP is master, codec will be slave */
+codec_is_master = !tegra_das_is_port_master(tegra_audio_codec_type_hifi);
+if (codec_is_master)
                 dai_flag |= SND_SOC_DAIFMT_CBS_CFS;
         else
                 dai_flag |= SND_SOC_DAIFMT_CBM_CFM;
 
         data_fmt = tegra_das_get_codec_data_fmt(tegra_audio_codec_type_hifi);
 
-	/* We are supporting DSP and I2s format for now */
-	if (data_fmt & dac_dap_data_format_i2s)
-		dai_flag |= SND_SOC_DAIFMT_I2S;
-	else
-		dai_flag |= SND_SOC_DAIFMT_DSP_A;
-	
-	pr_debug("%s(): format: 0x%08x\n", __FUNCTION__,params_format(params));
+/* We are supporting DSP and I2s format for now */
+if (data_fmt & dac_dap_data_format_i2s)
+dai_flag |= SND_SOC_DAIFMT_I2S;
+else
+dai_flag |= SND_SOC_DAIFMT_DSP_A;
 
-	err = snd_soc_dai_set_fmt(codec_dai, dai_flag);
-	if (err < 0) {
-		pr_err("codec_dai fmt not set \n");
-		return err;
-	}
+pr_debug("%s(): format: 0x%08x\n", __FUNCTION__,params_format(params));
 
-	/* Set the CPU dai format. This will also set the clock rate in master mode */
-	err = snd_soc_dai_set_fmt(cpu_dai, dai_flag);
-	if (err < 0) {
-		pr_err("cpu_dai fmt not set \n");
-		return err;
-	}
+err = snd_soc_dai_set_fmt(codec_dai, dai_flag);
+if (err < 0) {
+pr_err("codec_dai fmt not set \n");
+return err;
+}
+
+/* Set the CPU dai format. This will also set the clock rate in master mode */
+err = snd_soc_dai_set_fmt(cpu_dai, dai_flag);
+if (err < 0) {
+pr_err("cpu_dai fmt not set \n");
+return err;
+}
 
         sys_clk = tegra_das_get_mclk_rate();
         err = snd_soc_dai_set_sysclk(codec_dai, 0, sys_clk, SND_SOC_CLOCK_IN);
@@ -141,69 +148,128 @@ static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
                 return err;
         }
 
-	if (codec_is_master) {
-		pr_debug("%s(): codec in master mode\n",__FUNCTION__);
-		
-		/* If using port as slave (=codec as master), then we can use the
-		   codec PLL to get the other sampling rates */
-		
-		/* Try each one until success */
-		for (i = 0; i < ARRAY_SIZE(clocktab); i++) {
-		
-			if (clocktab[i].srate != srate) 
-				continue;
-				
-			if (snd_soc_dai_set_pll(codec_dai, 0, 0, sys_clk, clocktab[i].mclk) >= 0) {
-				/* Codec PLL is synthetizing this new clock */
-				sys_clk = clocktab[i].mclk;
-				break;
-			}
-		}
-		
-		if (i >= ARRAY_SIZE(clocktab)) {
-			pr_err("%s(): unable to set required MCLK for SYSCLK of %d, sampling rate: %d\n",__FUNCTION__,sys_clk,srate);
-			return -EINVAL;
-		}
-		
-	} else {
-		pr_debug("%s(): codec in slave mode\n",__FUNCTION__);
+if (codec_is_master) {
+pr_debug("%s(): codec in master mode\n",__FUNCTION__);
 
-		/* Disable codec PLL */
-		err = snd_soc_dai_set_pll(codec_dai, 0, 0, sys_clk, sys_clk);
-		if (err < 0) {
-			pr_err("%s(): unable to disable codec PLL\n",__FUNCTION__);
-			return err;
-		}
-		
-		/* Check this sampling rate can be achieved with this sysclk */
-		for (i = 0; i < ARRAY_SIZE(clocktab); i++) {
-		
-			if (clocktab[i].srate != srate) 
-				continue;
-				
-			if (sys_clk == clocktab[i].mclk)
-				break;
-		}
-		
-		if (i >= ARRAY_SIZE(clocktab)) {
-			pr_err("%s(): unable to get required %d hz sampling rate of %d hz SYSCLK\n",__FUNCTION__,srate,sys_clk);
-			return -EINVAL;
-		}
-	}
+/* If using port as slave (=codec as master), then we can use the
+codec PLL to get the other sampling rates */
 
-	/* Set CODEC sysclk */
-	err = snd_soc_dai_set_sysclk(codec_dai, 0, sys_clk, SND_SOC_CLOCK_IN);
-	if (err < 0) {
-		pr_err("codec_dai clock not set\n");
-		return err;
-	}
-	
-	return 0;
+/* Try each one until success */
+for (i = 0; i < ARRAY_SIZE(clocktab); i++) {
+
+if (clocktab[i].srate != srate)
+continue;
+
+if (snd_soc_dai_set_pll(codec_dai, 0, 0, sys_clk, clocktab[i].mclk) >= 0) {
+/* Codec PLL is synthetizing this new clock */
+sys_clk = clocktab[i].mclk;
+break;
+}
+}
+
+if (i >= ARRAY_SIZE(clocktab)) {
+pr_err("%s(): unable to set required MCLK for SYSCLK of %d, sampling rate: %d\n",__FUNCTION__,sys_clk,srate);
+return -EINVAL;
+}
+
+} else {
+pr_debug("%s(): codec in slave mode\n",__FUNCTION__);
+
+/* Disable codec PLL */
+err = snd_soc_dai_set_pll(codec_dai, 0, 0, sys_clk, sys_clk);
+if (err < 0) {
+pr_err("%s(): unable to disable codec PLL\n",__FUNCTION__);
+return err;
+}
+
+/* Check this sampling rate can be achieved with this sysclk */
+for (i = 0; i < ARRAY_SIZE(clocktab); i++) {
+
+if (clocktab[i].srate != srate)
+continue;
+
+if (sys_clk == clocktab[i].mclk)
+break;
+}
+
+if (i >= ARRAY_SIZE(clocktab)) {
+pr_err("%s(): unable to get required %d hz sampling rate of %d hz SYSCLK\n",__FUNCTION__,srate,sys_clk);
+return -EINVAL;
+}
+}
+
+/* Set CODEC sysclk */
+err = snd_soc_dai_set_sysclk(codec_dai, 0, sys_clk, SND_SOC_CLOCK_IN);
+if (err < 0) {
+pr_err("codec_dai clock not set\n");
+return err;
+}
+
+return 0;
 }
 
 static int tegra_voice_hw_params(struct snd_pcm_substream *substream,
-					struct snd_pcm_hw_params *params)
+struct snd_pcm_hw_params *params)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+struct snd_soc_pcm_runtime *rtd = substream->private_data;
+struct snd_soc_dai *codec_dai = rtd->dai->codec_dai;
+struct snd_soc_dai *cpu_dai = rtd->dai->cpu_dai;
+int dai_flag = 0, sys_clk;
+int err;
+
+/* Get DAS dataformat and master flag */
+int codec_is_master = !tegra_das_is_port_master(tegra_audio_codec_type_bluetooth);
+enum dac_dap_data_format data_fmt = tegra_das_get_codec_data_fmt(tegra_audio_codec_type_bluetooth);
+
+/* We are supporting DSP and I2s format for now */
+if (data_fmt & dac_dap_data_format_dsp)
+dai_flag |= SND_SOC_DAIFMT_DSP_A;
+else
+dai_flag |= SND_SOC_DAIFMT_I2S;
+
+if (codec_is_master)
+dai_flag |= SND_SOC_DAIFMT_CBM_CFM; /* codec is master */
+else
+dai_flag |= SND_SOC_DAIFMT_CBS_CFS;
+
+
+pr_debug("%s(): format: 0x%08x\n", __FUNCTION__,params_format(params));
+
+/* Set the CPU dai format. This will also set the clock rate in master mode */
+err = snd_soc_dai_set_fmt(cpu_dai, dai_flag);
+if (err < 0) {
+pr_err("cpu_dai fmt not set \n");
+return err;
+}
+
+/* Bluetooth Codec is always slave here */
+err = snd_soc_dai_set_fmt(codec_dai, dai_flag);
+if (err < 0) {
+pr_err("codec_dai fmt not set \n");
+return err;
+}
+
+/* Get system clock */
+sys_clk = tegra_das_get_mclk_rate();
+
+/* Set CPU sysclock as the same - in Tegra, seems to be a NOP */
+err = snd_soc_dai_set_sysclk(cpu_dai, 0, sys_clk, SND_SOC_CLOCK_IN);
+if (err < 0) {
+pr_err("cpu_dai clock not set\n");
+return err;
+}
+
+/* Set CODEC sysclk */
+err = snd_soc_dai_set_sysclk(codec_dai, 0, sys_clk, SND_SOC_CLOCK_IN);
+if (err < 0) {
+pr_err("cpu_dai clock not set\n");
+return err;
+}
+
+return 0;
+=======
 	pr_info("%s++", __func__);
 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
 	struct snd_soc_dai *codec_dai 	= rtd->dai->codec_dai;
@@ -261,73 +327,106 @@ static int tegra_voice_hw_params(struct snd_pcm_substream *substream,
 	}
 	
 	return 0;
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 }
 
 static int tegra_spdif_hw_params(struct snd_pcm_substream *substream,
-					struct snd_pcm_hw_params *params)
+struct snd_pcm_hw_params *params)
 {
-	pr_debug("%s(): format: 0x%08x\n", __FUNCTION__,params_format(params));
-	return 0;
+pr_debug("%s(): format: 0x%08x\n", __FUNCTION__,params_format(params));
+return 0;
 }
 
 static int tegra_codec_startup(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_das_power_mode(true);
+=======
 	pr_info("%s++", __func__);
 	tegra_das_power_mode(true);
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 
-	return 0;
+return 0;
 }
 
 static void tegra_codec_shutdown(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_das_power_mode(false);
+=======
 	pr_info("%s++", __func__);
 	tegra_das_power_mode(false);
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 }
 
 static int tegra_soc_suspend_pre(struct platform_device *pdev, pm_message_t state)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_jack_suspend();
+return 0;
+=======
 	pr_info("%s++", __func__);
 	tegra_jack_suspend();
 	return 0;
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 }
 
 static int tegra_soc_suspend_post(struct platform_device *pdev, pm_message_t state)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_das_disable_mclk();
+=======
 	pr_info("%s++", __func__);
 	tegra_das_disable_mclk();
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 
-	return 0;
+return 0;
 }
 
 static int tegra_soc_resume_pre(struct platform_device *pdev)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_das_enable_mclk();
+=======
 	pr_info("%s++", __func__);
 	tegra_das_enable_mclk();
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 
-	return 0;
+return 0;
 }
 
 static int tegra_soc_resume_post(struct platform_device *pdev)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+tegra_jack_resume();
+return 0;
+=======
 	pr_info("%s++", __func__);
 	tegra_jack_resume();
 	return 0;
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 }
 
 static struct snd_soc_ops tegra_hifi_ops = {
-	.hw_params = tegra_hifi_hw_params,
-	.startup = tegra_codec_startup,
-	.shutdown = tegra_codec_shutdown,
+.hw_params = tegra_hifi_hw_params,
+.startup = tegra_codec_startup,
+.shutdown = tegra_codec_shutdown,
 };
 
 static struct snd_soc_ops tegra_voice_ops = {
-	.hw_params = tegra_voice_hw_params,
-	.startup = tegra_codec_startup,
-	.shutdown = tegra_codec_shutdown,
+.hw_params = tegra_voice_hw_params,
+.startup = tegra_codec_startup,
+.shutdown = tegra_codec_shutdown,
 };
 
 static struct snd_soc_ops tegra_spdif_ops = {
-	.hw_params = tegra_spdif_hw_params,
+.hw_params = tegra_spdif_hw_params,
 };
 
 /* ------- Tegra audio routing using DAS -------- */
@@ -363,22 +462,51 @@ void tegra_ext_control(struct snd_soc_codec *codec, int new_con)
 static int tegra_dapm_event_int_spk(struct snd_soc_dapm_widget* w,
                                     struct snd_kcontrol* k, int event)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+=======
 	pr_info("%s++", __func__);
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         if (tegra_wired_jack_conf.en_spkr != -1) {
                 if (tegra_wired_jack_conf.amp_reg) {
                         if (SND_SOC_DAPM_EVENT_ON(event) &&
                                 !tegra_wired_jack_conf.amp_reg_enabled) {
                                 regulator_enable(tegra_wired_jack_conf.amp_reg);
                                 tegra_wired_jack_conf.amp_reg_enabled = 1;
-				pr_info("%s+1", __func__);
                         }
                         else if (!SND_SOC_DAPM_EVENT_ON(event) &&
                                 tegra_wired_jack_conf.amp_reg_enabled) {
                                 regulator_disable(tegra_wired_jack_conf.amp_reg);
                                 tegra_wired_jack_conf.amp_reg_enabled = 0;
-			        pr_info("%s+0", __func__);
                         }
                 }
+<<<<<<< HEAD
+
+                gpio_set_value_cansleep(tegra_wired_jack_conf.en_spkr,
+                        SND_SOC_DAPM_EVENT_ON(event) ? 1 : 0);
+
+                /* the amplifier needs 5ms to enable. wait 5ms after
+* gpio EN triggered */
+                if (SND_SOC_DAPM_EVENT_ON(event))
+                        msleep(5);
+        }
+
+        return 0;
+}
+
+static int tegra_dapm_event_int_mic(struct snd_soc_dapm_widget* w,
+                                    struct snd_kcontrol* k, int event)
+{
+pr_info("%s++", __func__);
+        if (tegra_wired_jack_conf.en_mic_int != -1)
+                gpio_set_value_cansleep(tegra_wired_jack_conf.en_mic_int,
+                        SND_SOC_DAPM_EVENT_ON(event) ? 1 : 0);
+
+        if (tegra_wired_jack_conf.en_mic_ext != -1)
+                gpio_set_value_cansleep(tegra_wired_jack_conf.en_mic_ext,
+                        SND_SOC_DAPM_EVENT_ON(event) ? 0 : 1);
+
+=======
 
                 gpio_set_value_cansleep(tegra_wired_jack_conf.en_spkr,
                         SND_SOC_DAPM_EVENT_ON(event) ? 1 : 0);
@@ -404,13 +532,18 @@ static int tegra_dapm_event_int_mic(struct snd_soc_dapm_widget* w,
                 gpio_set_value_cansleep(tegra_wired_jack_conf.en_mic_ext,
                         SND_SOC_DAPM_EVENT_ON(event) ? 0 : 1);
 
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         return 0;
 }
 
 static int tegra_dapm_event_ext_mic(struct snd_soc_dapm_widget* w,
                                     struct snd_kcontrol* k, int event)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+=======
 	pr_info("%s++", __func__);
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         if (tegra_wired_jack_conf.en_mic_ext != -1)
                 gpio_set_value_cansleep(tegra_wired_jack_conf.en_mic_ext,
                         SND_SOC_DAPM_EVENT_ON(event) ? 1 : 0);
@@ -424,15 +557,26 @@ static int tegra_dapm_event_ext_mic(struct snd_soc_dapm_widget* w,
 
 /*tegra machine dapm widgets */
 static const struct snd_soc_dapm_widget tegra_dapm_widgets[] = {
+<<<<<<< HEAD
+SND_SOC_DAPM_SPK("Internal Speaker", tegra_dapm_event_int_spk),
+SND_SOC_DAPM_HP("Headphone Jack", NULL),
+SND_SOC_DAPM_MIC("Internal Mic", tegra_dapm_event_int_mic),
+=======
 	SND_SOC_DAPM_SPK("Internal Speaker", tegra_dapm_event_int_spk),
 	SND_SOC_DAPM_HP("Headphone Jack", NULL),
 	SND_SOC_DAPM_MIC("Internal Mic", tegra_dapm_event_int_mic),
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 };
 
 /* Tegra machine audio map (connections to the codec pins) */
 static const struct snd_soc_dapm_route audio_map[] = {
+<<<<<<< HEAD
+{"Headphone Jack", NULL, "HPL"},
+{"Headphone Jack", NULL, "HPR"},
+=======
 	{"Headphone Jack", NULL, "HPL"},
 	{"Headphone Jack", NULL, "HPR"},
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         {"Internal Speaker", NULL, "AUXOUTL"},
         {"Internal Speaker", NULL, "AUXOUTR"},
         {"Mic 1 Bias", NULL, "Internal Mic"},
@@ -441,6 +585,15 @@ static const struct snd_soc_dapm_route audio_map[] = {
 
 static int tegra_codec_init(struct snd_soc_codec *codec)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+struct tegra_audio_data* audio_data = codec->socdev->codec_data;
+
+int ret = 0;
+
+if (!audio_data->init_done) {
+
+=======
 	pr_info("%s++", __func__);
 	struct tegra_audio_data* audio_data = codec->socdev->codec_data;
 
@@ -448,14 +601,20 @@ static int tegra_codec_init(struct snd_soc_codec *codec)
 
 	if (!audio_data->init_done) {
 		
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
                 audio_data->dap_mclk = tegra_das_get_dap_mclk();
                 if (!audio_data->dap_mclk) {
                         pr_err("Failed to get dap mclk \n");
                         ret = -ENODEV;
                         goto alc5623_init_fail;
                 }
+<<<<<<< HEAD
+
+ret = tegra_das_open();
+=======
 		
 		ret = tegra_das_open();
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
                 if (ret) {
                         pr_err(" Failed get dap mclk \n");
                         ret = -ENODEV;
@@ -469,6 +628,25 @@ static int tegra_codec_init(struct snd_soc_codec *codec)
                         goto alc5623_init_fail;
                 }
 
+<<<<<<< HEAD
+/* Add tegra specific widgets */
+snd_soc_dapm_new_controls(codec, tegra_dapm_widgets,
+ARRAY_SIZE(tegra_dapm_widgets));
+
+/* Set up tegra specific audio path audio_map */
+snd_soc_dapm_add_routes(codec, audio_map,
+ARRAY_SIZE(audio_map));
+
+                /* Set endpoints to not connected */
+                snd_soc_dapm_nc_pin(codec, "LINEOUT");
+                snd_soc_dapm_nc_pin(codec, "LINEOUTN");
+                snd_soc_dapm_nc_pin(codec, "LINEINL");
+                snd_soc_dapm_nc_pin(codec, "LINEINR");
+                snd_soc_dapm_nc_pin(codec, "AUXINL");
+                snd_soc_dapm_nc_pin(codec, "AUXINR");
+                snd_soc_dapm_nc_pin(codec, "MIC2");
+
+=======
 		/* Add tegra specific widgets */
 		snd_soc_dapm_new_controls(codec, tegra_dapm_widgets,
 					ARRAY_SIZE(tegra_dapm_widgets));
@@ -486,10 +664,20 @@ static int tegra_codec_init(struct snd_soc_codec *codec)
                 snd_soc_dapm_nc_pin(codec, "AUXINR");
                 snd_soc_dapm_nc_pin(codec, "MIC2");
 
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
                 /* Set endpoints to default off mode */
                 snd_soc_dapm_enable_pin(codec, "Internal Speaker");
                 snd_soc_dapm_enable_pin(codec, "Internal Mic");
                 snd_soc_dapm_disable_pin(codec, "Headphone Jack");
+<<<<<<< HEAD
+=======
+
+                ret = snd_soc_dapm_sync(codec);
+                if (ret) {
+                        pr_err("Failed to sync\n");
+                        return ret;
+                }
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 
                 ret = snd_soc_dapm_sync(codec);
                 if (ret) {
@@ -497,7 +685,7 @@ static int tegra_codec_init(struct snd_soc_codec *codec)
                         return ret;
                 }
 
-		/* Add jack detection */
+/* Add jack detection */
                 ret = tegra_jack_init(codec);
                 if (ret < 0) {
                         pr_err("Failed in jack init \n");
@@ -512,13 +700,23 @@ static int tegra_codec_init(struct snd_soc_codec *codec)
                         pr_err("Failed in controls init \n");
                         goto alc5623_init_fail;
                 }
+<<<<<<< HEAD
+=======
 	
 		audio_data->codec = codec;
 		audio_data->init_done = 1;
 	}
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 
-	return ret;
+audio_data->codec = codec;
+audio_data->init_done = 1;
+}
 
+<<<<<<< HEAD
+return ret;
+
+=======
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
 alc5623_init_fail:
         tegra_das_disable_mclk();
         tegra_das_close();
@@ -526,15 +724,15 @@ alc5623_init_fail:
 
 }
 
-#define TEGRA_CREATE_SOC_DAI_LINK(xname, xstreamname,   \
-                        xcpudai, xcodecdai, xops)       \
-{                                                       \
-        .name = xname,                                  \
-        .stream_name = xstreamname,                     \
-        .cpu_dai = xcpudai,                             \
-        .codec_dai = xcodecdai,                         \
-        .init = tegra_codec_init,                       \
-        .ops = xops,                                    \
+#define TEGRA_CREATE_SOC_DAI_LINK(xname, xstreamname, \
+xcpudai, xcodecdai, xops) \
+{ \
+.name = xname, \
+.stream_name = xstreamname, \
+.cpu_dai = xcpudai, \
+.codec_dai = xcodecdai, \
+.init = tegra_codec_init, \
+.ops = xops, \
 }
 
 
@@ -563,28 +761,32 @@ static struct tegra_audio_data audio_data = {
 
 /* The Tegra card definition */
 static struct snd_soc_card tegra_snd_soc = {
-	.name = "tegra-alc5623",
-	.platform 	= &tegra_soc_platform,
-	.dai_link 	= tegra_soc_dai,
-	.num_links 	= ARRAY_SIZE(tegra_soc_dai),
-	.suspend_pre = tegra_soc_suspend_pre,
-	.suspend_post = tegra_soc_suspend_post,
-	.resume_pre = tegra_soc_resume_pre,
-	.resume_post = tegra_soc_resume_post,
+.name = "tegra-alc5623",
+.platform = &tegra_soc_platform,
+.dai_link = tegra_soc_dai,
+.num_links = ARRAY_SIZE(tegra_soc_dai),
+.suspend_pre = tegra_soc_suspend_pre,
+.suspend_post = tegra_soc_suspend_post,
+.resume_pre = tegra_soc_resume_pre,
+.resume_post = tegra_soc_resume_post,
 };
 
 /* A sound device is composed of a card (in this case, Tegra, and
-   a codec, in this case ALC5623 */
+a codec, in this case ALC5623 */
 static struct snd_soc_device tegra_snd_devdata = {
-	.card = &tegra_snd_soc,
-	.codec_dev = &soc_codec_dev_alc5623,
-	.codec_data = &audio_data,
+.card = &tegra_snd_soc,
+.codec_dev = &soc_codec_dev_alc5623,
+.codec_data = &audio_data,
 };
 
 
 static int __init tegra_init(void)
 {
+<<<<<<< HEAD
+pr_info("%s++", __func__);
+=======
 	pr_info("%s++", __func__);
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         int ret = 0;
 
         tegra_snd_device = platform_device_alloc("soc-audio", -1);
@@ -620,7 +822,11 @@ err_put_regulator:
 
 static void __exit tegra_exit(void)
 {
+<<<<<<< HEAD
+tegra_jack_exit();
+=======
 	tegra_jack_exit();
+>>>>>>> 8163a112dde23f141f7a7a11fca57ec6e4ac8be6
         platform_device_unregister(tegra_snd_device);
 }
 

@@ -370,13 +370,11 @@ static int tegra_dapm_event_int_spk(struct snd_soc_dapm_widget* w,
                                 !tegra_wired_jack_conf.amp_reg_enabled) {
                                 regulator_enable(tegra_wired_jack_conf.amp_reg);
                                 tegra_wired_jack_conf.amp_reg_enabled = 1;
-				pr_info("%s+1", __func__);
                         }
                         else if (!SND_SOC_DAPM_EVENT_ON(event) &&
                                 tegra_wired_jack_conf.amp_reg_enabled) {
                                 regulator_disable(tegra_wired_jack_conf.amp_reg);
                                 tegra_wired_jack_conf.amp_reg_enabled = 0;
-			        pr_info("%s+0", __func__);
                         }
                 }
 

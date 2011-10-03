@@ -32,7 +32,7 @@ static __initdata struct tegra_pingroup_config smba1002_pinmux[] = {
         {TEGRA_PINGROUP_ATE,   TEGRA_MUX_GMI,           TEGRA_PUPD_NORMAL,    TEGRA_TRI_NORMAL},
         
 	{TEGRA_PINGROUP_CDEV1, TEGRA_MUX_PLLA_OUT,      TEGRA_PUPD_NORMAL, TEGRA_TRI_NORMAL},
-        {TEGRA_PINGROUP_CDEV2, TEGRA_MUX_PLLP_OUT4,     TEGRA_PUPD_PULL_DOWN, TEGRA_TRI_TRISTATE},
+        {TEGRA_PINGROUP_CDEV2, TEGRA_MUX_OSC,     TEGRA_PUPD_PULL_DOWN, TEGRA_TRI_TRISTATE},
         
 	{TEGRA_PINGROUP_CRTP,  TEGRA_MUX_CRT,           TEGRA_PUPD_NORMAL,    TEGRA_TRI_TRISTATE},
         {TEGRA_PINGROUP_CSUS,  TEGRA_MUX_VI_SENSOR_CLK, TEGRA_PUPD_NORMAL,    TEGRA_TRI_TRISTATE},
@@ -231,7 +231,7 @@ static struct tegra_gpio_table gpio_table[] = {
 	{ .gpio = SMBA1002_WLAN_RESET,		.enable = true },
 	{ .gpio = SMBA1002_LOW_BATT,		.enable = true },
 	{ .gpio = SMBA1002_IN_S3,			.enable = true },
-/*	{ .gpio = SMBA1002_USB1_RESET,		.enable = true },*/
+	{ .gpio = SMBA1002_USB1_RESET,		.enable = true },
 	{ .gpio = SMBA1002_HP_DETECT,		.enable = true },
 };
 

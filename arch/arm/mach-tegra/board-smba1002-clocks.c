@@ -197,10 +197,10 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 #else
 # ifdef SMBA1002_48KHZ_AUDIO
 // { CDEV1, NULL /*"pll_a_out0"*/,12288000, false}, /* used as audio CODEC MCLK */
-    { CDEV1, NULL /*"pll_a_out0"*/,0, false}, /* used as audio CODEC MCLK */
+    { CDEV1, NULL /*"pll_a_out0"*/,0, true}, /* used as audio CODEC MCLK */
 # else
 // { CDEV1, NULL /*"pll_a_out0"*/,11289600, false}, /* used as audio CODEC MCLK */
-    { CDEV1, NULL /*"pll_a_out0"*/,0, false}, /* used as audio CODEC MCLK */
+    { CDEV1, NULL /*"pll_a_out0"*/,0, true}, /* used as audio CODEC MCLK */
 # endif
 #endif
 // { CDEV2, NULL, 26000000, false}, /* probably used as USB clock - perhaps 24mhz ?*/
@@ -248,10 +248,10 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 
     { "vfir", "clk_m", 12000000, false},
 
-    { "sdmmc1", "pll_p", 48000000, false}, /* sdhci-tegra.0 */
+    { "sdmmc1", "pll_p", 48000000, true}, /* sdhci-tegra.0 */
     { "sdmmc2", "pll_p", 48000000, false}, /* sdhci-tegra.1 */
-    { "sdmmc3", "pll_p", 48000000, false}, /* sdhci-tegra.2 */
-    { "sdmmc4", "pll_p", 48000000, false}, /* sdhci-tegra.3 */
+    { "sdmmc3", "pll_p", 48000000, true}, /* sdhci-tegra.2 */
+    { "sdmmc4", "pll_p", 30000000, true}, /* sdhci-tegra.3 */
 
     { "la", "clk_m", 12000000, false},
 
