@@ -816,8 +816,6 @@ static irqreturn_t i2c_interrupt(int irq, void *dev)
 					/* Schedule processing of events */
 					schedule_work(&nvec->ev_work);
 					
-					/* release lock */
-					spin_unlock_irqrestore(&nvec->ev_lock,flags);
 				}
 
 			} else {
