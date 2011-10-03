@@ -228,7 +228,7 @@ static struct tegra_audio_platform_data tegra_audio_pdata[] = {
     },
     /* For I2S2 - Bluetooth */
     [1] = {
-        .i2s_master = true,
+        .i2s_master = false,
         .dma_on = true, /* use dma by default */
         .i2s_master_clk = 8000,
         .dsp_master_clk = 8000,
@@ -250,7 +250,7 @@ static struct alc5623_platform_data alc5623_pdata = {
     .mclk = "cdev1",
 #endif
     .linevdd_mv = 5000, /* Line Vdd in millivolts */
-    .linevol_scale=80,
+    .linevol_scale=88,
  // .spkvdd_mv = 3300, /* Speaker Vdd in millivolts */
  // .hpvdd_mv = 3300, /* Headphone Vdd in millivolts */
     .add_ctrl = 0xD300,

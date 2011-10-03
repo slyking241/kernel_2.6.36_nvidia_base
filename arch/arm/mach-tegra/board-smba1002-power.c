@@ -27,7 +27,6 @@
 #include <linux/mfd/tps6586x.h>
 #include <linux/power_supply.h>
 #include <linux/power/nvec_power.h>
-#include <linux/mfd/nvec.h>
 #include <linux/gpio.h>
 #include <linux/platform_device.h>
 #include <linux/power_supply.h>
@@ -520,15 +519,15 @@ static struct regulator_init_data bq24610_init_data = {
 static struct bq24610_mach_info bq24610_platform_data = {
 	.gpio_nce = TEGRA_GPIO_PK7,
 	.init_data = &bq24610_init_data,
-};
+}
 
 static struct platform_device smba1002_bq24610_device= {
 	.name = "bq24610",
 	.dev = {
 		.platform_data = &bq24610_platform_data,
 	},
-};
-*/
+}; */
+
 static void reg_off(const char *reg)
 {
 	int rc;
@@ -547,7 +546,7 @@ static void reg_off(const char *reg)
 	if (rc)
 		pr_err("%s: regulator_disable returned %d\n", __func__, rc);
 	regulator_put(regulator);
-};
+}
 
 static void smba1002_power_off(void)
 {
@@ -590,14 +589,14 @@ struct platform_device tegra_rtc_device = {
 #endif
 
 static struct platform_device *smba1002_power_devices[] __initdata = {
-//	&smba1002_ldo_tps2051B_reg_device,
-//	&smba1002_vdd_aon_reg_device,
+	&smba1002_ldo_tps2051B_reg_device,
+	&smba1002_vdd_aon_reg_device,
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)	
 	&tegra_pmu_device,
 #else
 	&pmu_device,
 #endif
-	//&smba1002_nvec_mfd,
+	&smba1002_nvec_mfd,
 	&tegra_rtc_device,
 	//&smba1002_bq24610_device,
 };
