@@ -642,8 +642,8 @@ pr_warn("Cannot reserve first 4K of memory for safety\n");
 
 #if defined(DYNAMIC_GPU_MEM)
 /* Reserve the graphics memory */
-//tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB1_MEM_SIZE, SMBA1002_FB2_MEM_SIZE);
-tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB_SIZE, SMBA1002_FB_HDMI_SIZE);
+tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB1_MEM_SIZE, SMBA1002_FB2_MEM_SIZE);
+//tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB_SIZE, SMBA1002_FB_HDMI_SIZE);
 #endif
 }
 

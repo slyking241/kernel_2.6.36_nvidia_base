@@ -307,7 +307,7 @@ struct nvec_chip {
 	struct nvec_event	ev_pool[8];			/* Pool of messages used to receive events */
 	volatile long unsigned int ev_allocd;	/* bitmap of allocated event messages */
 	struct work_struct 	ev_work;			/* Call of list of event handlers */
-	spinlock_t			ev_lock;
+	
 	int					smbus_state;		/* Step into the state machine to handle SMBus slave communications */
 	
 	struct blocking_notifier_head 	ev_notifier_list;
@@ -816,8 +816,6 @@ static irqreturn_t i2c_interrupt(int irq, void *dev)
 					/* Schedule processing of events */
 					schedule_work(&nvec->ev_work);
 					
-					/* release lock */
-					spin_unlock_irqrestore(&nvec->ev_lock,flags);
 				}
 
 			} else {

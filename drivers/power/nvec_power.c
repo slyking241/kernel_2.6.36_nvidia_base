@@ -386,6 +386,7 @@ static int nvec_power_update_status(struct nvec_power *power,bool force_update)
 				}
 				
 			} else {
+			
 				if (power->bat_present == 1)
 					bat_status_changed = 1;
 
@@ -790,7 +791,7 @@ static void nvec_power_work_func(struct work_struct *work)
 		struct nvec_power, work);
 
 	/* Update power supply status */
-	nvec_power_update_status(power,true);
+	nvec_power_update_status(power,false);
 	
 	queue_delayed_work(power->work_queue, &power->work,
 				 msecs_to_jiffies(NVEC_POWER_POLLING_INTERVAL));
