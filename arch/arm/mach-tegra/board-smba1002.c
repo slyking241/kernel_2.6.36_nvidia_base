@@ -480,7 +480,7 @@ void smba1002_3g_gps_poweron(void)
 if (atomic_inc_return(&smba1002_3g_gps_powered) == 1) {
 pr_info("Enabling 3G/GPS module\n");
 
-gpio_set_value(SHUTTLE_3GGPS_DISABLE, 1); 
+gpio_set_value(SHUTTLE_3GGPS_DISABLE, 0); 
 msleep(2);
 }
 }
@@ -491,7 +491,7 @@ void smba1002_3g_gps_poweroff(void)
 if (atomic_dec_return(&smba1002_3g_gps_powered) == 0) {
 pr_info("Disabling 3G/GPS module\n");
 
-gpio_set_value(SHUTTLE_3GGPS_DISABLE, 0); 
+gpio_set_value(SHUTTLE_3GGPS_DISABLE, 1); 
 msleep(2);
 }
 }
@@ -502,7 +502,7 @@ void smba1002_3g_gps_init(void)
 {
 if (atomic_inc_return(&smba1002_3g_gps_inited) == 1) {
 gpio_request(SHUTTLE_3GGPS_DISABLE, "gps_disable");
-gpio_direction_output(SHUTTLE_3GGPS_DISABLE, 0);
+gpio_direction_output(SHUTTLE_3GGPS_DISABLE, 1);
 }
 }
 EXPORT_SYMBOL_GPL(smba1002_3g_gps_init);
@@ -514,10 +514,10 @@ atomic_dec(&smba1002_3g_gps_inited);
 EXPORT_SYMBOL_GPL(smba1002_3g_gps_deinit);
 */
 static struct tegra_suspend_platform_data smba1002_suspend = {
-.cpu_timer = 5000,
-.cpu_off_timer = 5000,
-.core_timer = 0x7e7e, 
-.core_off_timer = 0x7f,
+.cpu_timer = 2000, // 5000
+.cpu_off_timer = 0, // 5000
+.core_timer = 0x7e7e, //
+.core_off_timer = 0, // 0x7f
     .corereq_high = false,
 .sysclkreq_high = true,
 .suspend_mode = TEGRA_SUSPEND_LP1,
@@ -644,6 +644,7 @@ pr_warn("Cannot reserve first 4K of memory for safety\n");
 #if defined(DYNAMIC_GPU_MEM)
 /* Reserve the graphics memory */
 tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB1_MEM_SIZE, SMBA1002_FB2_MEM_SIZE);
+//tegra_reserve(SMBA1002_GPU_MEM_SIZE, SMBA1002_FB_SIZE, SMBA1002_FB_HDMI_SIZE);
 #endif
 }
 

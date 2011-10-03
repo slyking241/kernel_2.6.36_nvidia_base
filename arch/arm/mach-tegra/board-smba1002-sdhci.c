@@ -157,10 +157,11 @@ static struct tegra_sdhci_platform_data tegra_sdhci_platform_data3 = {
 	.cd_gpio =   SMBA1002_SDHC_CD,
 	.wp_gpio = -1,
 	.power_gpio =  SMBA1002_SDHC_POWER,
-	.is_8bit = 0, 
+	//s_8bit = 0, 
 };
 
 static struct tegra_sdhci_platform_data tegra_sdhci_platform_data4 = {
+	//orce_hs  = 1,
 	.cd_gpio = -1, /* SMBA1002_SDHC4_CD, */
 	.wp_gpio = -1, /* SMBA1002_SDHC4_WP, */
 	.power_gpio = -1, /* SMBA1002_SDHC4_POWER , */
@@ -172,8 +173,8 @@ static struct tegra_sdhci_platform_data tegra_sdhci_platform_data4 = {
 static struct platform_device *smba1002_sdhci_devices[] __initdata = {
 	&tegra_sdhci_device1,
 	// &tegra_sdhci_device2,
-	&tegra_sdhci_device3,
 	&tegra_sdhci_device4,
+	&tegra_sdhci_device3,  //init out of order to insure proper mounting
 };
 
 static int __init smba1002_wifi_init(void)

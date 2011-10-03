@@ -60,6 +60,8 @@
 	Codec is ALC5624
 	Codec I2C Address = 0x30(includes R/W bit), i2c #0
 	Codec MCLK = APxx DAP_MCLK1
+	
+	Bluetooth is always master
 */
 
 #if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
@@ -226,7 +228,7 @@ static struct tegra_audio_platform_data tegra_audio_pdata[] = {
 	},
 	/* For I2S2 - Bluetooth */
 	[1] = {
-		.i2s_master		= true,
+		.i2s_master		= false,	/* bluetooth is master always */
 		.dma_on			= true,  /* use dma by default */
 		.i2s_master_clk = 8000,
 		.dsp_master_clk = 8000,
@@ -250,12 +252,12 @@ static struct alc5624_platform_data alc5624_pdata = {
 	.avdd_mv			= 3300,	/* Analog vdd in millivolts */
 	.spkvdd_mv 			= 5000,	/* Speaker Vdd in millivolts */
 	.hpvdd_mv 			= 3300,	/* Headphone Vdd in millivolts */
-	.spkvol_scale 		= 80,	/* Scale speaker volume to the percent of maximum range -Be careful: range is logarithmic! */
+	.spkvol_scale 		= 88,	/* Scale speaker volume to the percent of maximum range -Be careful: range is logarithmic! */
 	
 	.mic1bias_mv		= 2970,	/* MIC1 bias voltage */
 	.mic2bias_mv		= 2970,	/* MIC2 bias voltage */
-	.mic1boost_db		= 40,	/* MIC1 gain boost */
-	.mic2boost_db		= 40,	/* MIC2 gain boost */
+	.mic1boost_db		= 30,	/* MIC1 gain boost */
+	.mic2boost_db		= 30,	/* MIC2 gain boost */
 	
 	.default_is_mic2 	= true,	/* Shuttle uses MIC2 as the default capture source */
 	
@@ -343,4 +345,8 @@ static void init_dac2(void)
 	das_writel(3<<28 | 3<<24 | 3,
 			APB_MISC_DAS_DAC_INPUT_DATA_CLK_SEL_0 + 4);
 }
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 0d355b2c17db2bfdb054da3625d1875f55e74dbe
