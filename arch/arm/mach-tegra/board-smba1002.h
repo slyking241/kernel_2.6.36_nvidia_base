@@ -71,8 +71,8 @@
 #define SMBA1002_1024x600PANEL1 /* The smba1002 default panel */
 
 /* maximum allowed HDMI resolution */
-
-#define SMBA1002_1280x720HDMI
+#define SMBA1002_1920x1080HDMI
+/* #define SMBA1002_1280x720HDMI */
 
 
 /*#define SMBA1002_48KHZ_AUDIO*/ /* <- define this if you want 48khz audio sampling rate instead of 44100Hz */
@@ -163,7 +163,12 @@ extern int smba1002_camera_register_devices(void);
 /*Framebuffer Size for default Gtablet Panel*/
 #define SMBA1002_FB_SIZE TEGRA_ROUND_ALLOC(1024*600*(16/8)*SMBA1002_FB_PAGES)
 /*Frambuffer size for 720p HDMI Framebuffer Output*/
-#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(32/8)*2)
+#if defined(SMBA1002_1920x1080HDMI)
+/* Frame buffer size assuming 32bpp color and 2 pages for page flipping */
+#	define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(32/8)*2)
+#else
+#	define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(32/8)*2)
+#endif
 
 
 #endif

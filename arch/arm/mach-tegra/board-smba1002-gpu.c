@@ -192,19 +192,18 @@ static struct tegra_fb_data smba1002_fb_data = {
 	.bits_per_pixel	= 16,
 };
 
-//#if defined(SMBA1002_1920x1080HDMI)
+#if defined(SMBA1002_1920x1080HDMI)
 
-/* Frame buffer size assuming 16bpp color and 2 pages for page flipping */
-//#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(16/8)*2)
+/* Frame buffer size assuming 32bpp color and 2 pages for page flipping */
 
-//static struct tegra_fb_data smba1002_hdmi_fb_data = {
-//	.win		= 0,
-//	.xres		= 1920,
-//	.yres		= 1080,
-//	.bits_per_pixel	= 16,
-//};
+static struct tegra_fb_data smba1002_hdmi_fb_data = {
+	.win		= 0,
+	.xres		= 1920,
+	.yres		= 1080,
+	.bits_per_pixel	= 32,
+};
 
-//#else
+#else
 
 //#define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(16/8)*2)
 
@@ -214,7 +213,7 @@ static struct tegra_fb_data smba1002_hdmi_fb_data = {
 	.yres		= 720,
 	.bits_per_pixel	= 32,
 };
-//#endif
+#endif
 
 static struct tegra_dc_out smba1002_disp1_out = {
 	.type		= TEGRA_DC_OUT_RGB,
@@ -399,12 +398,19 @@ static void smba1002_panel_early_suspend(struct early_suspend *h)
 {
 	if (num_registered_fb > 0)
 		fb_blank(registered_fb[0], FB_BLANK_POWERDOWN);
+#ifdef CONFIG_CPU_FREQ
+	cpufreq_save_default_governor();
+	cpufreq_set_conservative_governor();
+#endif
 }
 
 static void smba1002_panel_late_resume(struct early_suspend *h)
 {
 	if (num_registered_fb > 0)
 		fb_blank(registered_fb[0], FB_BLANK_UNBLANK);
+#ifdef CONFIG_CPU_FREQ
+	cpufreq_restore_default_governor();
+#endif
 }
 #endif 
 
