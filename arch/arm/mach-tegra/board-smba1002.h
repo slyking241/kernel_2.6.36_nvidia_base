@@ -27,7 +27,7 @@
 #define SMBA1002_KEY_VOLUMEUP 	TEGRA_GPIO_PD4 	/* 0=pressed */
 #define SMBA1002_KEY_VOLUMEDOWN 	TEGRA_GPIO_PV4 	/* 0=pressed */
 #define SMBA1002_KEY_POWER 		TEGRA_GPIO_PV2 	/* 0=pressed */
-#define SHUTTLE_KEY_RESUME 		TEGRA_GPIO_PV6 	/* 0=pressed */
+#define SMBA1002_KEY_RESUME 		TEGRA_GPIO_PV6 	/* 0=pressed */
 #define SMBA1002_KEY_BACK		TEGRA_GPIO_PH0	/* 0=pressed */
 
 /* #define SMBA1002_EMC_SAMSUNG		*/
@@ -173,4 +173,3 @@ extern int smba1002_camera_register_devices(void);
 
 #endif
 
-/*Limiting Frambuffers to Default Panel and 720p memory output.  Check board-shuttle.h for other options*/
