@@ -27,6 +27,7 @@
 #include <linux/mfd/tps6586x.h>
 #include <linux/power_supply.h>
 #include <linux/power/nvec_power.h>
+#include <linux/mfd/nvec.h>
 #include <linux/gpio.h>
 #include <linux/platform_device.h>
 #include <linux/power_supply.h>
@@ -405,9 +406,9 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
 	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
 	//TPS_ADJ_REG(LDO_SOC, &soc_data),
-/*	TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
-   TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
-   TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
+	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
+	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
+	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
 	{
 		.id		= -1,
 		.name		= "tps6586x-rtc",
@@ -519,15 +520,15 @@ static struct regulator_init_data bq24610_init_data = {
 static struct bq24610_mach_info bq24610_platform_data = {
 	.gpio_nce = TEGRA_GPIO_PK7,
 	.init_data = &bq24610_init_data,
-}
+};
 
 static struct platform_device smba1002_bq24610_device= {
 	.name = "bq24610",
 	.dev = {
 		.platform_data = &bq24610_platform_data,
 	},
-}; */
-
+};
+*/
 static void reg_off(const char *reg)
 {
 	int rc;
@@ -546,7 +547,7 @@ static void reg_off(const char *reg)
 	if (rc)
 		pr_err("%s: regulator_disable returned %d\n", __func__, rc);
 	regulator_put(regulator);
-}
+};
 
 static void smba1002_power_off(void)
 {
@@ -596,7 +597,7 @@ static struct platform_device *smba1002_power_devices[] __initdata = {
 #else
 	&pmu_device,
 #endif
-	&smba1002_nvec_mfd,
+	//&smba1002_nvec_mfd,
 	&tegra_rtc_device,
 	//&smba1002_bq24610_device,
 };
