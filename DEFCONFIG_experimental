@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.36.3
-# Thu Oct  6 00:12:03 2011
+# Thu Oct  6 22:29:44 2011
 #
 CONFIG_ARM=y
 CONFIG_HAVE_PWM=y
@@ -2145,9 +2145,9 @@ CONFIG_LIS3L02DQ=y
 #
 # Light sensors
 #
-CONFIG_SENSORS_TSL2563=m
-CONFIG_ISL29018=m
-CONFIG_ISL29023=y
+# CONFIG_SENSORS_TSL2563 is not set
+# CONFIG_ISL29018 is not set
+# CONFIG_ISL29023 is not set
 
 #
 # Magnetometer sensors

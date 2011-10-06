@@ -32,29 +32,27 @@ static struct i2c_board_info __initdata smba1002_i2c_bus0_sensor_info[] = {
 		I2C_BOARD_INFO("bq20z75-battery", 0x0B),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PH2),
 	},
-		{
-		I2C_BOARD_INFO("so340010_kbd", 0x1a),
-		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV6),
-	},
-/*	{
-		I2C_BOARD_INFO("lis3lv02d", 0x5c),
-		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PJ0),
-	},*/
+		
+	
 };
 
 static struct i2c_board_info __initdata smba1002_i2c_bus4_sensor_info[] = {
-	{
+/*	{
 		I2C_BOARD_INFO("isl29023", 0x4c),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV5),
+	},*/
+	{
+		I2C_BOARD_INFO("so340010_kbd", 0x4c),
+		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV6),
 	},
 };
 
 int __init smba1002_sensors_register_devices(void)
 {
-	tegra_gpio_enable(TEGRA_GPIO_PV5);
+	/* tegra_gpio_enable(TEGRA_GPIO_PV5);
 	gpio_request(TEGRA_GPIO_PV5, "isl29023_irq");
 	gpio_direction_input(TEGRA_GPIO_PV5);
-
+*/
 	tegra_gpio_enable(TEGRA_GPIO_PH2);
 	gpio_request(TEGRA_GPIO_PH2, "ac_present_irq");
 	gpio_direction_input(TEGRA_GPIO_PH2);
