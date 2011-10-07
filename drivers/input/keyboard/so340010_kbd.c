@@ -44,7 +44,7 @@
  * TODO irq gpio number should be modify in SMBA1102 
  */
 // TODO: Settings from platform_info
-/*#define SO340010_IRQ_PORT				('v'-'a')
+#define SO340010_IRQ_PORT				('v'-'a')
 #define SO340010_IRQ_PIN				6
 #define SO340010_GPIO_DEBOUNCE_TIME		10*/
 
@@ -106,10 +106,10 @@ struct so340010_kbd_info {
 };
 
 static struct so340010_kbd_info key_table[] = {
-	{ 0x0008, KEY_BACK },
+        { 0x0008, KEY_SEARCH },
 	{ 0x0004, KEY_MENU },
-	{ 0x0002, KEY_HOME },
-	{ 0x0001, KEY_SEARCH },
+	{ 0x0002, KEY_BACK },
+	{ 0x0001, KEY_HOME },
 };
 
 static int key_num = sizeof(key_table)/sizeof(key_table[0]);
