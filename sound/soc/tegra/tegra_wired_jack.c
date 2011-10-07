@@ -191,8 +191,9 @@ static int tegra_wired_jack_probe(struct platform_device *pdev)
 					wired_jack_gpios);
 		return ret;
 	}
-
-	/* Mic switch controlling pins 
+*/
+	/* Mic switch controlling pins */
+/*	
 	en_mic_int = pdata->en_mic_int;
 	en_mic_ext = pdata->en_mic_ext;
 
@@ -225,8 +226,8 @@ static int tegra_wired_jack_probe(struct platform_device *pdev)
 		tegra_wired_jack_conf.amp_reg =
 			regulator_get(NULL, pdata->spkr_amp_reg);
 	tegra_wired_jack_conf.amp_reg_enabled = 0;
-
-	/* restore configuration of these pins */
+*/
+	// restore configuration of these pins 
 	tegra_wired_jack_conf.hp_det_n = hp_det_n;
 	tegra_wired_jack_conf.en_mic_int = en_mic_int;
 	tegra_wired_jack_conf.en_mic_ext = en_mic_ext;
