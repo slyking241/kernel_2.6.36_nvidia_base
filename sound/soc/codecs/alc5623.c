@@ -77,7 +77,7 @@ static const struct {
         u16 reg;        /* register */
         u16 val;        /* value */
 } alc5623_reg_default[] = {
-        {ALC5623_LINE_OUT_VOL                            , 0x6F6F }, /* Muted */
+        {ALC5623_LINE_OUT_VOL                           , 0x6F6F }, /* Muted */
         {ALC5623_HP_OUT_VOL                             , 0x4040 }, /* Unmute left and right channels, enable 0 cross detector, 0db volume */
         {ALC5623_MONO_AUX_OUT_VOL                       , 0x4040 }, /* Unmute L+2 */
         {ALC5623_AUX_IN_VOL                             	, 0xFF1F }, /* Mute Aux In volume */
@@ -1340,7 +1340,7 @@ static int alc5623_hw_write(void* control_data,const char* data_in_s,int len)
 {
         struct alc5623 *alc5623 = control_data;
         u8* data_in = (u8*)data_in_s;
-        printk(KERN_INFO "%s(%x)++\n", __FUNCTION__,data_in[0]);
+       // printk(KERN_INFO "%s(%x)++\n", __FUNCTION__,data_in[0]);
 
         /* If dealing with the main volume, scale it as requested */
         if (data_in[0] == ALC5623_LINE_OUT_VOL) {
@@ -1642,7 +1642,7 @@ static int alc5623_volatile_register(unsigned int reg)
 static unsigned int alc5623_hw_read(struct snd_soc_codec *codec,
         unsigned int reg)
 {
-        printk(KERN_INFO "%s(%x)++\n", __FUNCTION__, reg);
+       // printk(KERN_INFO "%s(%x)++\n", __FUNCTION__, reg);
         struct alc5623 *alc5623 = snd_soc_codec_get_drvdata(codec);
 
         /* If dealing with the main volume, scale it as requested */

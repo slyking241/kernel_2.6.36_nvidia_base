@@ -615,7 +615,7 @@ smba1002_sensors_register_devices();
 //smba1002_gsm_pm_register_devices();
 
 /* Register Bluetooth powermanagement devices */
-//smba1002_bt_pm_register_devices();
+smba1002_bt_pm_register_devices();
 
 /* Register Camera powermanagement devices */
 //smba1002_camera_pm_register_devices();
