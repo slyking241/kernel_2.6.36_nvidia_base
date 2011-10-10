@@ -39,7 +39,7 @@
 static struct tegra_i2c_platform_data smba1002_i2c1_platform_data = {
 	.adapter_nr	= 0,
 	.bus_count	= 1,
-	.bus_clk_rate	= { 100000, 0 },
+	.bus_clk_rate	= { 400000, 0 },
 };
 
 static const struct tegra_pingroup_config i2c2_ddc = {
@@ -56,7 +56,7 @@ static struct tegra_i2c_platform_data smba1002_i2c2_platform_data = {
 	.adapter_nr	= 1,
 	.bus_count	= 2,
 /* Rayman:	.bus_clk_rate	= { 400000, 10000 }, */
-	.bus_clk_rate	= { 100000, 100000 }, //taken from 32 kernel
+	.bus_clk_rate	= { 400000, 100000 }, //taken from 32 kernel
 	.bus_mux	= { &i2c2_ddc, &i2c2_gen2 }, 
 	.bus_mux_len	= { 1, 1 },
 };
@@ -64,13 +64,13 @@ static struct tegra_i2c_platform_data smba1002_i2c2_platform_data = {
 static struct tegra_i2c_platform_data smba1002_i2c3_platform_data = {
 	.adapter_nr	= 3,
 	.bus_count	= 1,
-	.bus_clk_rate	= { 100000, 0 },
+	.bus_clk_rate	= { 400000, 0 },
 };
 
 static struct tegra_i2c_platform_data smba1002_dvc_platform_data = {
 	.adapter_nr	= 4,
 	.bus_count	= 1,
-	.bus_clk_rate	= { 100000, 0 },
+	.bus_clk_rate	= { 400000, 0 },
 	.is_dvc		= true,
 };
 
@@ -88,4 +88,3 @@ int __init smba1002_i2c_register_devices(void)
 	
 	return 0;
 }
-
