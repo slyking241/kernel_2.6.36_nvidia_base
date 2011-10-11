@@ -112,7 +112,7 @@
 #define SMBA1002_LOW_BATT	TEGRA_GPIO_PW3 /*(0=low battery)*/
 #define SMBA1002_IN_S3		TEGRA_GPIO_PAA7 /*1 = in S3 */
 
-#define SMBA1002_USB0_VBUS	TEGRA_GPIO_PB0		/* 1= VBUS usb0 */
+//#define SMBA1002_USB0_VBUS	TEGRA_GPIO_PB0		/* 1= VBUS usb0 */
 #define SMBA1002_USB1_RESET		TEGRA_GPIO_PV1	/* 0= reset */
 
 #define SMBA1002_HP_DETECT	TEGRA_GPIO_PW2 	/* HeadPhone detect for audio codec: 1=Hedphone plugged */
@@ -165,7 +165,7 @@ extern int smba1002_camera_register_devices(void);
 /*Frambuffer size for 720p HDMI Framebuffer Output*/
 #if defined(SMBA1002_1920x1080HDMI)
 /* Frame buffer size assuming 32bpp color and 2 pages for page flipping */
-#	define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(16/8)*2)
+#	define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1920*1080*(32/8)*2)
 #else
 #	define SMBA1002_FB_HDMI_SIZE TEGRA_ROUND_ALLOC(1280*720*(32/8)*2)
 #endif

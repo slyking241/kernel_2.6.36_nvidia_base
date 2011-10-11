@@ -309,9 +309,9 @@ int __init smba1002_audio_register_devices(void)
     tegra_i2s_device1.dev.platform_data = &tegra_audio_pdata[0];
     tegra_i2s_device2.dev.platform_data = &tegra_audio_pdata[1];
     tegra_spdif_device.dev.platform_data = &tegra_spdif_pdata;
-//#if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
+#if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
     tegra_das_device.dev.platform_data = &tegra_das_pdata;
-//#endif
+#endif
 
     ret = i2c_register_board_info(0, SMBA1002_i2c_bus0_board_info,
                                   ARRAY_SIZE(SMBA1002_i2c_bus0_board_info));
