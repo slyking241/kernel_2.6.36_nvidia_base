@@ -112,7 +112,7 @@
 #define SMBA1002_LOW_BATT	TEGRA_GPIO_PW3 /*(0=low battery)*/
 #define SMBA1002_IN_S3		TEGRA_GPIO_PAA7 /*1 = in S3 */
 
-//#define SMBA1002_USB0_VBUS	TEGRA_GPIO_PB0		/* 1= VBUS usb0 */
+#define SMBA1002_USB0_VBUS	TEGRA_GPIO_PB0		/* 1= VBUS usb0 */
 #define SMBA1002_USB1_RESET		TEGRA_GPIO_PV1	/* 0= reset */
 
 #define SMBA1002_HP_DETECT	TEGRA_GPIO_PW2 	/* HeadPhone detect for audio codec: 1=Hedphone plugged */
