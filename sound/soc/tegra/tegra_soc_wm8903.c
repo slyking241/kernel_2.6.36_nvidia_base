@@ -67,65 +67,13 @@ extern struct wired_jack_conf tegra_wired_jack_conf;
 
 #define SET_REG_VAL(r,m,l,v) (((r)&(~((m)<<(l))))|(((v)&(m))<<(l)))
 
-static ssize_t digital_mic_show(struct device *dev,
-				struct device_attribute *attr,
-				char *buf)
-{
-	return sprintf(buf, "%d\n", en_dmic);
-}
+	//if (sscanf(buf, "%d", &en_dmic) != 1) {
+	//	pr_err("%s: invalid input string [%s]\n", __func__, buf);
+	//	return -EINVAL;
+	//}
+//	return count;
+//}
 
-static ssize_t digital_mic_store(struct device *dev,
-				struct device_attribute *attr,
-				const char *buf, size_t count)
-{
-	if (count > 3) {
-		pr_err("%s: buffer size %d too big\n", __func__, count);
-		return -EINVAL;
-	}
-
-	if (sscanf(buf, "%d", &en_dmic) != 1) {
-		pr_err("%s: invalid input string [%s]\n", __func__, buf);
-		return -EINVAL;
-	}
-	return count;
-}
-
-static DEVICE_ATTR(enable_digital_mic, 0644, digital_mic_show, digital_mic_store);
-
-static void configure_dmic(struct snd_soc_codec *codec)
-{
-	u16 test4, reg;
-
-	if (en_dmic) {
-		/* Set GP1_FN as DMIC_LR */
-		snd_soc_write(codec, WM8903_GPIO_CONTROL_1,
-					DMIC_CLK_OUT | GPIO_DIR_OUT);
-
-		/* Set GP2_FN as DMIC_DAT */
-		snd_soc_write(codec, WM8903_GPIO_CONTROL_2,
-					DMIC_DAT_DATA_IN | GPIO_DIR_IN);
-
-		/* Enable ADC Digital volumes */
-		snd_soc_write(codec, WM8903_ADC_DIGITAL_VOLUME_LEFT,
-					ADC_DIGITAL_VOL_9DB);
-		snd_soc_write(codec, WM8903_ADC_DIGITAL_VOLUME_RIGHT,
-					ADC_DIGITAL_VOL_9DB);
-
-		/* Enable DIG_MIC */
-		test4 = WM8903_ADC_DIG_MIC;
-	} else {
-		/* Disable DIG_MIC */
-		test4 = snd_soc_read(codec, WM8903_CLOCK_RATE_TEST_4);
-		test4 &= ~WM8903_ADC_DIG_MIC;
-	}
-
-	reg = snd_soc_read(codec, WM8903_CONTROL_INTERFACE_TEST_1);
-	snd_soc_write(codec, WM8903_CONTROL_INTERFACE_TEST_1,
-			 reg | WM8903_TEST_KEY);
-	snd_soc_write(codec, WM8903_CLOCK_RATE_TEST_4, test4);
-	snd_soc_write(codec, WM8903_CONTROL_INTERFACE_TEST_1, reg);
-
-}
 
 static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
 					struct snd_pcm_hw_params *params)
@@ -212,9 +160,9 @@ static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
 		CtrlReg = (0x1<<B01_INL_ENA);
 		snd_soc_write(codec, WM8903_POWER_MANAGEMENT_0, CtrlReg);
 		/* ADC Settings */
-		CtrlReg = snd_soc_read(codec, WM8903_ADC_DIGITAL_0);
-		CtrlReg |= (0x1<<B04_ADC_HPF_ENA);
-		snd_soc_write(codec, WM8903_ADC_DIGITAL_0, CtrlReg);
+		//CtrlReg = snd_soc_read(codec, WM8903_ADC_DIGITAL_0);
+		//CtrlReg |= (0x1<<B04_ADC_HPF_ENA);
+		//snd_soc_write(codec, WM8903_ADC_DIGITAL_0, CtrlReg);
 		/* Disable sidetone */
 		CtrlReg = 0;
 		snd_soc_write(codec, R20_SIDETONE_CTRL, CtrlReg);
@@ -226,7 +174,7 @@ static int tegra_hifi_hw_params(struct snd_pcm_substream *substream,
 		CtrlReg |= 0x3; /*mic volume 18 db */
 		snd_soc_write(codec, R29_DRC_1, CtrlReg);
 
-		configure_dmic(codec);
+		//configure_dmic(codec);
 
 	}
 
@@ -295,26 +243,26 @@ int tegra_codec_startup(struct snd_pcm_substream *substream)
 {
 	tegra_das_power_mode(true);
 
-	if ((SNDRV_PCM_STREAM_CAPTURE == substream->stream) && en_dmic) {
+	//if ((SNDRV_PCM_STREAM_CAPTURE == substream->stream) && en_dmic) {
 		/* enable d-mic */
-		if (reg_vmic) {
-			regulator_enable(reg_vmic);
-		}
-	}
+	//	if (reg_vmic) {
+	//		regulator_enable(reg_vmic);
+	//	}
+	//}
 
-	return 0;
+	//return 0;
 }
 
 void tegra_codec_shutdown(struct snd_pcm_substream *substream)
 {
 	tegra_das_power_mode(false);
 
-	if ((SNDRV_PCM_STREAM_CAPTURE == substream->stream) && en_dmic) {
+	//if ((SNDRV_PCM_STREAM_CAPTURE == substream->stream) && en_dmic) {
 		/* disable d-mic */
-		if (reg_vmic) {
-			regulator_disable(reg_vmic);
-		}
-	}
+	//	if (reg_vmic) {
+	//		regulator_disable(reg_vmic);
+	//	}
+//	}
 }
 
 int tegra_soc_suspend_pre(struct platform_device *pdev, pm_message_t state)
@@ -634,14 +582,7 @@ static int __init tegra_init(void)
 		goto fail;
 	}
 
-	ret = device_create_file(&tegra_snd_device->dev,
-							&dev_attr_enable_digital_mic);
-	if (ret < 0) {
-		dev_err(&tegra_snd_device->dev,
-				"%s: could not create sysfs entry %s: %d\n",
-				__func__, dev_attr_enable_digital_mic.attr.name, ret);
-		goto fail;
-	}
+	
 
 	reg_vmic = regulator_get(&tegra_snd_device->dev, "vmic");
 	if (IS_ERR_OR_NULL(reg_vmic)) {
