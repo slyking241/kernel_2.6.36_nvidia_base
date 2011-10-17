@@ -56,7 +56,7 @@ static struct tegra_i2c_platform_data smba1002_i2c2_platform_data = {
 	.adapter_nr	= 1,
 	.bus_count	= 2,
 /* Rayman:	.bus_clk_rate	= { 400000, 10000 }, */
-	.bus_clk_rate	= { 100000, 100000 }, //taken from 32 kernel
+	.bus_clk_rate	= { 400000, 100000 }, //taken from 32 kernel
 	.bus_mux	= { &i2c2_ddc, &i2c2_gen2 }, 
 	.bus_mux_len	= { 1, 1 },
 };

@@ -31,7 +31,7 @@
 #include <linux/i2c.h>
 #include "lis3lv02d.h"
 
-#define DRV_NAME 	"lis3lv02d"
+#define DRV_NAME 	"lis3lv02d_i2c"
 
 static inline s32 lis3_i2c_write(struct lis3lv02d *lis3, int reg, u8 value)
 {

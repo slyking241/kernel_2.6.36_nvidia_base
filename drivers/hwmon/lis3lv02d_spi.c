@@ -19,7 +19,7 @@
 
 #include "lis3lv02d.h"
 
-#define DRV_NAME 	"lis3lv02d"
+#define DRV_NAME 	"lis3lv02d_spi"
 #define LIS3_SPI_READ	0x80
 
 static int lis3_spi_read(struct lis3lv02d *lis3, int reg, u8 *v)

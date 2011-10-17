@@ -44,9 +44,9 @@
  * TODO irq gpio number should be modify in SMBA1102 
  */
 // TODO: Settings from platform_info
-#define SO340010_IRQ_PORT				('v'-'a')
+/*#define SO340010_IRQ_PORT				('v'-'a')
 #define SO340010_IRQ_PIN				6
-#define SO340010_GPIO_DEBOUNCE_TIME		10
+#define SO340010_GPIO_DEBOUNCE_TIME		10*/
 
 #define SO340010_REG_GENERAL_CONFIG		0x0001
 #define SO340010_REG_GPIO_STATE			0x0108
@@ -184,7 +184,7 @@ static int so340010_i2c_read(struct so340010_kbd_dev *dev, unsigned short reg_st
 
 	msgs[0].addr = dev->client->addr;
 	msgs[0].len = 2;
-	msgs[0].buf = reg_buffer;
+	msgs[0].buf = &reg_buffer;
 	msgs[0].flags = 0;
 	
 	msgs[1].addr = dev->client->addr;

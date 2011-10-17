@@ -35,7 +35,7 @@
 #define SPK_EN_GPIO   3
 
 struct wired_jack_conf tegra_wired_jack_conf = {
-	.hp_det_n = 1,
+	.hp_det_n = -1,
 	-1, -1, -1, 0, NULL, NULL
 };
 

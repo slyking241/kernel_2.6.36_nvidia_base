@@ -246,8 +246,6 @@ static struct tegra_dc_out smba1002_hdmi_out = {
 
 	.align		= TEGRA_DC_ALIGN_MSB,
 	.order		= TEGRA_DC_ORDER_RED_BLUE,
-       
-        .max_pixclock   = KHZ2PICOS(148500),
 
 	.enable		= smba1002_hdmi_enable,
 	.disable	= smba1002_hdmi_disable,

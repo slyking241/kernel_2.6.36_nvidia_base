@@ -228,7 +228,7 @@ static struct tegra_audio_platform_data tegra_audio_pdata[] = {
     },
     /* For I2S2 - Bluetooth */
     [1] = {
-        .i2s_master = false,
+        .i2s_master = true,
         .dma_on = true, /* use dma by default */
         .i2s_master_clk = 8000,
         .dsp_master_clk = 8000,
