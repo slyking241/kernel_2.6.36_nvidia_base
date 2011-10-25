@@ -24,11 +24,11 @@
 
 #define DRIVER_NAME	"so340010_kbd"
 
-#define SO340010_I2C_TRY_COUNT			3
+#define SO340010_I2C_TRY_COUNT			10
 
 #define SO340010_TIMER_INTERVAL			2000
 
-#define __SO340010_GENERIC_DEBUG__        1
+#define __SO340010_GENERIC_DEBUG__        0
 #define __I2C_SNAG_DETECTED__           0
 
 #define TAG             "SO340010: "
@@ -44,9 +44,9 @@
  * TODO irq gpio number should be modify in SMBA1102 
  */
 // TODO: Settings from platform_info
-/*#define SO340010_IRQ_PORT				('v'-'a')
+#define SO340010_IRQ_PORT				('v'-'a')
 #define SO340010_IRQ_PIN				6
-#define SO340010_GPIO_DEBOUNCE_TIME		10*/
+#define SO340010_GPIO_DEBOUNCE_TIME		10
 
 #define SO340010_REG_GENERAL_CONFIG		0x0001
 #define SO340010_REG_GPIO_STATE			0x0108

@@ -44,19 +44,19 @@ static struct tegra_i2c_platform_data smba1002_i2c1_platform_data = {
 
 static const struct tegra_pingroup_config i2c2_ddc = {
 	.pingroup	= TEGRA_PINGROUP_DDC, 
-	.func		= TEGRA_MUX_I2C2,
+	.func		= TEGRA_MUX_RSVD2,
 };
 
 static const struct tegra_pingroup_config i2c2_gen2 = {
 	.pingroup	= TEGRA_PINGROUP_PTA,
-	.func		= TEGRA_MUX_I2C2,
+	.func		= TEGRA_MUX_RSVD4,
 };
 
 static struct tegra_i2c_platform_data smba1002_i2c2_platform_data = {
 	.adapter_nr	= 1,
 	.bus_count	= 2,
 /* Rayman:	.bus_clk_rate	= { 400000, 10000 }, */
-	.bus_clk_rate	= { 400000, 100000 }, //taken from 32 kernel
+	.bus_clk_rate	= { 100000, 100000 }, //taken from 32 kernel
 	.bus_mux	= { &i2c2_ddc, &i2c2_gen2 }, 
 	.bus_mux_len	= { 1, 1 },
 };
