@@ -153,6 +153,20 @@ static struct nand_ecclayout tegra_nand_oob_64 = {
 		},
 	},
 };
+#if 0
+static struct nand_ecclayout tegra_nand_oob_64 = {
+	.eccbytes	= 18,
+	.eccpos		= {
+		 8,  9, 10, 11, 12, 13, 
+		14, 15, 16, 17, 18, 19, 
+		20, 21, 22, 23, 24, 25, 
+		},
+	.oobavail = 28, 
+	.oobfree = {
+		{26, 28}
+	}, 
+};
+#endif
 
 static struct nand_flash_dev *
 find_nand_flash_device(int dev_id)

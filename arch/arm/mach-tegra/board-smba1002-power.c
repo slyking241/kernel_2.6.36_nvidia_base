@@ -20,6 +20,9 @@
  */
 #include <linux/i2c.h>
 #include <linux/version.h>
+#include <linux/delay.h>
+#include <linux/reboot.h>
+#include <linux/console.h>
 #include <linux/regulator/machine.h>
 #include <linux/regulator/fixed.h>
 #include <linux/regulator/virtual_adj.h>
@@ -40,6 +43,7 @@
 #include <mach/irqs.h>
 #include <mach/iomap.h>
 #include <mach/gpio.h>
+#include <mach/system.h>
 
 #include "board-smba1002.h"
 #include "gpio-names.h"
@@ -405,10 +409,10 @@ static struct tps6586x_subdev_info tps_devs[] = {
 	TPS_ADJ_REG(LDO_8, &ldo8_data),
 	TPS_ADJ_REG(LDO_9, &ldo9_data),
 	//TPS_ADJ_REG(LDO_RTC, &rtc_data),
-	//TPS_ADJ_REG(LDO_SOC, &soc_data),
-	/*TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
+	TPS_ADJ_REG(LDO_SOC, &soc_data),
+	TPS_GPIO_FIX_REG(0, &ldo_tps74201_cfg),
 	TPS_GPIO_FIX_REG(1, &buck_tps62290_cfg),
-	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),*/
+	TPS_GPIO_FIX_REG(2, &ldo_tps72012_cfg),
 	{
 		.id		= -1,
 		.name		= "tps6586x-rtc",
@@ -552,7 +556,7 @@ static void reg_off(const char *reg)
 static void smba1002_power_off(void)
 {
 	/* Power down through NvEC */
-	//nvec_poweroff();
+	nvec_poweroff();
 	
 	/* Then try by powering off supplies */
 	reg_off("vdd_sm2");
@@ -597,7 +601,7 @@ static struct platform_device *smba1002_power_devices[] __initdata = {
 #else
 	&pmu_device,
 #endif
-	//&smba1002_nvec_mfd,
+	&smba1002_nvec_mfd,
 	&tegra_rtc_device,
 	//&smba1002_bq24610_device,
 };

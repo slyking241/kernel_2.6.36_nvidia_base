@@ -34,18 +34,25 @@ static struct i2c_board_info __initdata smba1002_i2c_bus0_sensor_info[] = {
 	},
 
 	{
-		I2C_BOARD_INFO("so340010_kbd", 0x03),
+		I2C_BOARD_INFO("so340010_kbd", 0x2c),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV6),
 	},	{
-		I2C_BOARD_INFO("isl29023", 0x44),
+	I2C_BOARD_INFO("isl29023", 0x44),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV5),
 	},
 	
 	{
-		I2C_BOARD_INFO("lis3lv02d", 0x38),
+		I2C_BOARD_INFO("lis3lv02d_i2c", 0x1C),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PJ0),
 	},
 };
+
+static struct i2c_board_info __initdata adam_i2c_bus4_sensor_info[] = {
+	{
+		I2C_BOARD_INFO("adt7461", 0x4C),
+		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PN6),
+		},
+};		
 
 int __init smba1002_sensors_register_devices(void)
 {
@@ -66,7 +73,8 @@ int __init smba1002_sensors_register_devices(void)
 	gpio_direction_input(TEGRA_GPIO_PV6);
 
 	 
-	return i2c_register_board_info(0, smba1002_i2c_bus0_sensor_info,
+	i2c_register_board_info(0, smba1002_i2c_bus0_sensor_info,
 	                        ARRAY_SIZE(smba1002_i2c_bus0_sensor_info));
-   
+   	return i2c_register_board_info(4, adam_i2c_bus4_sensor_info,
+	                               ARRAY_SIZE(adam_i2c_bus4_sensor_info));
 }
