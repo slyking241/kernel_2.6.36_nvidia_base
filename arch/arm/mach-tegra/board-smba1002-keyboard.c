@@ -48,22 +48,22 @@ static struct gpio_keys_button smba1002_keys[] = {
 	},
 	[2] = {
 		.gpio = SMBA1002_KEY_POWER,
-		.active_low = true,
+		.active_low = false,
 		.debounce_interval = 100,
 		.wakeup = true,		
 		.code = KEY_POWER,
 		.type = EV_KEY,		
 		.desc = "power",
 	},
-	[3] = {
+	/*[3] = {
 		.gpio = SMBA1002_KEY_BACK,
-		.active_low = true,
+		.active_low = false,
 		.debounce_interval = 20,
 		.wakeup = true,		
 		.code = KEY_BACK,
 		.type = EV_KEY,		
 		.desc = "back",
-	},
+	},*/
 };
 
 

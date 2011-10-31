@@ -297,8 +297,8 @@ static struct regulator_init_data ldo9_data
 	= ADJ_REGULATOR_INIT(ldo9,1250, 3350, 1, 1); // 2850
 static struct regulator_init_data rtc_data  		 
 	= ADJ_REGULATOR_INIT(rtc, 1250, 3350, 1, 1); // 3300
-/*static struct regulator_init_data buck_data 
-	= ADJ_REGULATOR_INIT(buck,1250, 3350, 0, 0); // 3300*/
+static struct regulator_init_data buck_data 
+	= ADJ_REGULATOR_INIT(buck,1250, 3350, 0, 0); // 3300
 	
 static struct regulator_init_data soc_data  		 
 	= ADJ_REGULATOR_INIT(soc, 1250, 3300, 1, 1);
