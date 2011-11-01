@@ -1,7 +1,7 @@
 /*
  * arch/arm/mach-tegra/board-smba1002-clocks.c
  *
- * Copyright (C) 2011 Eduardo José Tagle <ejtagle@tutopia.com>
+ * Copyright (C) 2011 Eduardo JosÃ© Tagle <ejtagle@tutopia.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -79,44 +79,36 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 // { "pll_p_out2", "pll_p", 48000000, true}, /* must be always on - usb perhaps ? unused ?*/
     { "pll_p_out2", "pll_p", 108000000, true}, /* must be always on - usb perhaps ? unused ?*/
     { "pll_p_out3", "pll_p", 72000000, true}, /* must be always on - i2c, camera */
-    { "pll_p_out4", "pll_p", 26000000, true}, /* must be always on - USB ulpi */
+    { "pll_p_out4", "pll_p", 24000000, true}, /* must be always on - USB ulpi */
 
     /* pll_m is used as memory clock - bootloader also uses it this way */
     { "pll_m", "clk_m", 666000000, true}, /* always on - memory clocks */
 // { "pll_m_out1", "pll_m", 26000000, true}, /* always on - unused ?*/
-    { "pll_m_out1", "pll_m", 222000000, true}, /* always on - unused ?*/
+    { "pll_m_out1", "pll_m", 266400000, true}, /* always on - unused ?*/
     { "emc", "pll_m", 666000000, true}, /* always on */
 
     /* pll_c is used as graphics clock and system clock */
     { "pll_c", "clk_m", 600000000, true}, /* always on - graphics and camera clocks */
 // { "pll_c_out1", "pll_c", 108000000, true}, /* must be always on - system clock */
-    { "pll_c_out1", "pll_c", 171428571, true}, /* must be always on - system clock */
+    { "pll_c_out1", "pll_c", 120000000, true}, /* must be always on - system clock */
 
     { "sclk", "pll_p_out2", 108000000, true}, /* must be always on */
     { "avp.sclk", NULL, 108000000, false}, /* must be always on */
     { "cop", "sclk", 108000000, false}, /* must be always on */
     { "hclk", "sclk", 108000000, true}, /* must be always on */
-// { "pclk", "hclk", 54000000, true}, /* must be always on */
-    { "pclk", "hclk", 108000000, true}, /* must be always on */
+    { "pclk", "hclk", 54000000, true}, /* must be always on */
+//    { "pclk", "hclk", 108000000, true}, /* must be always on */
 
     /* pll_a and pll_a_out0 are clock sources for audio interfaces */
-#ifdef ALC5623_IS_MASTER
-    { "pll_a", "pll_p_out1", 73728000, true}, /* always on - audio clocks */
-    { "pll_a_out0", "pll_a", 18432000, true}, /* always on - i2s audio */
-#else
-# ifdef SMBA1002_48KHZ_AUDIO
-    { "pll_a", "pll_p_out1", 73728000, true}, /* always on - audio clocks */
-    { "pll_a_out0", "pll_a", 12288000, true}, /* always on - i2s audio */
-# else
+
     { "pll_a", "pll_p_out1", 56448000, true}, /* always on - audio clocks */
     { "pll_a_out0", "pll_a", 11289600, true}, /* always on - i2s audio */
-# endif
-#endif
+
 
     /* pll_d and pll_d_out0 are clock sources for HDMI output */
-    { "pll_d", "clk_m", 5000000, true}, /* hdmi clock */
+    { "pll_d", "clk_m", 1000000, true}, /* hdmi clock */
 // { "pll_d_out0", "pll_d", 5000000, true}, /* hdmi clock */
-    { "pll_d_out0", "pll_d", 2500000, true}, /* hdmi clock */
+    { "pll_d_out0", "pll_d", 500000, true}, /* hdmi clock */
 
     { "clk_d", "clk_m", 24000000, true},
 
@@ -124,9 +116,9 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "pll_u", "clk_m", 480000000, false}, /* USB ulpi clock */
 
     /* pll_x */
-    { "pll_x", "clk_m", 760000000, true}, /* */
-    { "cclk", "pll_x", 760000000, true},
-    { "cpu", "cclk", 760000000, true},
+    { "pll_x", "clk_m", 456000000, true}, /* */
+    { "cclk", "pll_x", 456000000, true},
+    { "cpu", "cclk", 456000000, true},
 
     /* Peripherals - Always on */
     { "csite", "pll_p", 144000000, true}, /* csite - coresite */ /* always on */
@@ -135,19 +127,19 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "kfuse", "clk_m", 12000000, true}, /* kfuse-tegra */ /* always on - no init req */
 
     /* Peripherals - Turned on demand */
-// { "3d", "pll_c", 300000000, false}, /* tegra_grhost, gr3d */
-    { "3d", "pll_c", 333000000, false}, /* tegra_grhost, gr3d */
+   { "3d", "pll_c", 300000000, false}, /* tegra_grhost, gr3d */
+//  { "3d", "pll_c", 333000000, false}, /* tegra_grhost, gr3d */
     { "2d", "pll_c", 300000000, false}, /* tegra_grhost, gr2d */
     { "epp", "pll_c", 300000000, false}, /* tegra_grhost */
 // { "mpe", "pll_c", 300000000, false}, /* tegra_grhost */
-    { "mpe", "pll_c", 266400000, false}, /* tegra_grhost */
-// { "host1x", "pll_p", 144000000, false}, /* tegra_grhost */
-    { "host1x", "pll_p", 108000000, false}, /* tegra_grhost */
+    { "mpe", "pll_c", 240000000, false}, /* tegra_grhost */
+ { "host1x", "pll_p", 144000000, false}, /* tegra_grhost */
+//    { "host1x", "pll_p", 108000000, false}, /* tegra_grhost */
 
 // { "vi", "pll_c", 150000000, true}, /* tegra_camera */
-    { "vi", "pll_c", 111000000, true}, /* tegra_camera */
+    { "vi", "pll_c", 109090909, true}, /* tegra_camera */
 // { "vi_sensor", "pll_c", 150000000, true}, /* tegra_camera */
-    { "vi_sensor", "pll_c", 111000000, true}, /* tegra_camera */
+    { "vi_sensor", "pll_c", 109090909, true}, /* tegra_camera */
     { "csi", "pll_p_out3", 72000000, true}, /* tegra_camera */
     { "isp", "clk_m", 12000000, true}, /* tegra_camera */
     { "csus", "clk_m", 12000000, true}, /* tegra_camera */
@@ -157,30 +149,14 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "afi", "clk_m", 12000000, false}, /* pcie controller */
     { "pcie_xclk", "clk_m", 12000000, false}, /* pcie controller */
 #endif
-#ifdef ALC5623_IS_MASTER
-    { "i2s1", "clk_m", 12000000, true}, /* i2s.0 */
-    { "i2s2", "clk_m", 12000000, true}, /* i2s.1 */
-    { "audio", "i2s1", 12000000, true},
-    { "audio_2x", "audio", 24000000, true},
-    { "spdif_in", "pll_p", 36000000, true},
-    { "spdif_out", "pll_a_out0", 6144000, true},
-#else
-# ifdef SMBA1002_48KHZ_AUDIO
-    { "i2s1", "pll_a_out0", 12288000, true}, /* i2s.0 */
-    { "i2s2", "pll_a_out0", 12288000, true}, /* i2s.1 */
-    { "audio", "pll_a_out0", 12288000, true},
-    { "audio_2x", "audio", 24576000, true},
-    { "spdif_in", "pll_p", 36000000, true},
-    { "spdif_out", "pll_a_out0", 6144000, true},
-# else
-    { "i2s1", "pll_a_out0", 2822400, true}, /* i2s.0 */
-    { "i2s2", "pll_a_out0", 11289600, true}, /* i2s.1 */
-    { "audio", "pll_a_out0", 11289600, true},
-    { "audio_2x", "audio", 22579200, true},
-    { "spdif_in", "pll_p", 36000000, true},
+
+    { "i2s1", "pll_a_out0", 11289600, true}, /* i2s.0 */
+    { "i2s2", "pll_a_out0", 1881600, true}, /* i2s.1 */
+    { "audio", "pll_a_out0", 6084507, true},
+    { "audio_2x", "audio", 12169014, true},
+    { "spdif_in", "pll_p", 6084507, true},
     { "spdif_out", "pll_a_out0", 5644800, true},
-# endif
-#endif
+
 
     /* cdev[1-2] take the configuration (clock parents) from the pinmux config,
     That is why we are setting it to NULL */
@@ -191,18 +167,9 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 #define CDEV1 "clk_dev1"
 #define CDEV2 "clk_dev2"
 #endif
-#ifdef ALC5623_IS_MASTER
-// { CDEV1, NULL, 18432000, false}, /* used as audio CODEC MCLK */
-    { CDEV1, NULL, 0, false}, /* used as audio CODEC MCLK */
-#else
-# ifdef SMBA1002_48KHZ_AUDIO
-// { CDEV1, NULL /*"pll_a_out0"*/,12288000, false}, /* used as audio CODEC MCLK */
-    { CDEV1, NULL /*"pll_a_out0"*/,0, true}, /* used as audio CODEC MCLK */
-# else
 // { CDEV1, NULL /*"pll_a_out0"*/,11289600, false}, /* used as audio CODEC MCLK */
     { CDEV1, NULL /*"pll_a_out0"*/,0, true}, /* used as audio CODEC MCLK */
-# endif
-#endif
+
 // { CDEV2, NULL, 26000000, false}, /* probably used as USB clock - perhaps 24mhz ?*/
     { CDEV2, NULL, 0, false}, /* probably used as USB clock - perhaps 24mhz ?*/
 
@@ -211,12 +178,12 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "i2c2_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.1 */
     { "i2c3_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.2 */
     { "dvc_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.3 */
-    { "i2c1", "clk_m", 3000000, false}, /* tegra-i2c.0 */
-    { "i2c2", "clk_m", 3000000, false}, /* tegra-i2c.1 */
-    { "i2c3", "clk_m", 3000000, false}, /* tegra-i2c.2 */
-    { "dvc", "clk_m", 3000000, false}, /* tegra-i2c.3 */
+    { "i2c1", "clk_m", 800000, false}, /* tegra-i2c.0 */
+    { "i2c2", "clk_m", 800000, false}, /* tegra-i2c.1 */
+    { "i2c3", "clk_m", 800000, false}, /* tegra-i2c.2 */
+    { "dvc", "clk_m",  800000, false}, /* tegra-i2c.3 */
 
-    { "apbdma", "pclk", 108000000, true}, /* tegra-dma */
+    { "apbdma", "pclk", 54000000, true}, /* tegra-dma */
     { "uarta", "pll_p", 216000000, false}, /* tegra_uart.0 uart.0 */
     { "uartb", "pll_p", 216000000, false}, /* tegra_uart.1 uart.1 */
     { "uartc", "pll_p", 216000000, false}, /* tegra_uart.2 uart.2 */
@@ -226,11 +193,8 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "disp1", "pll_p", 216000000, false}, /* tegradc.0 */
     { "disp2", "pll_p", 216000000, false}, /* tegradc.1 */
 
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38)
-    { "dsi", "pll_d", 5000000, false}, /* tegra_dc.0, tegra_dc.1 */
-#else
-    { "dsi", "pll_d_out0", 2500000, false}, /* tegra_dc.0, tegra_dc.1 - bug on kernel 2.6.36*/
-#endif
+
+    { "dsi", "pll_d_out0", 5000000, false}, /* tegra_dc.0, tegra_dc.1 - bug on kernel 2.6.36*/
     { "hdmi", "clk_m", 12000000, false}, /* tegra_dc.0, tegra_dc.1 */
 
     { "spi", "clk_m", 12000000, false},
@@ -250,8 +214,8 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 
     { "sdmmc1", "pll_p", 48000000, true}, /* sdhci-tegra.0 */
     { "sdmmc2", "pll_p", 48000000, false}, /* sdhci-tegra.1 */
-    { "sdmmc3", "pll_p", 48000000, true}, /* sdhci-tegra.2 */
-    { "sdmmc4", "pll_p", 30000000, true}, /* sdhci-tegra.3 */
+    { "sdmmc3", "pll_p", 48000000, false}, /* sdhci-tegra.2 */
+    { "sdmmc4", "pll_p", 48000000, false}, /* sdhci-tegra.3 */
 
     { "la", "clk_m", 12000000, false},
 
@@ -269,14 +233,14 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "tvo", "clk_m", 12000000, false},
     { "tvdac", "clk_m", 12000000, false},
 
-    { "usbd", "clk_m", 12000000, false}, /* fsl-tegra-udc , utmip-pad , tegra_ehci.0 , tegra_otg */
-    { "usb2", "clk_m", 12000000, false}, /* tegra_ehci.1 */
-    { "usb3", "clk_m", 12000000, false}, /* tegra_ehci.2 */
+    { "usbd", "clk_m", 666000000 , false}, /* fsl-tegra-udc , utmip-pad , tegra_ehci.0 , tegra_otg */
+    { "usb2", "clk_m", 666000000 , false}, /* tegra_ehci.1 */
+    { "usb3", "clk_m", 666000000 , false}, /* tegra_ehci.2 */
 
     { "pwm", "clk_m", 12000000, false}, /* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 
     { "kbc", "clk_32k", 32768, false}, /* tegra-kbc */
-    { "blink", "clk_32k", 32768, false}, /* used for bluetooth */
+    { "blink", "clk_32k", 32768, true}, /* used for bluetooth */
 
     { NULL, NULL, 0, 0},
 };
