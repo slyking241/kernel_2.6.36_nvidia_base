@@ -68,10 +68,10 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "clk_32k", NULL, 32768, true}, /* always on */
 
     /* Master clock */
-    { "clk_m", NULL, 0, true}, /* must be always on - Frequency will be autodetected */
+    { "clk_m", NULL, 32768, true}, /* must be always on - Frequency will be autodetected */
 
     /* pll_s generates the master clock */
-    { "pll_s", "clk_32k", 12000000, true}, /* must be always on */
+    { "pll_s", "clk_32k", 32768, true}, /* must be always on */
 
     /* pll_p is used as system clock - and for ulpi */
     { "pll_p", "clk_m", 216000000, true}, /* must be always on */
