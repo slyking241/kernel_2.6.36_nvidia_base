@@ -64,6 +64,7 @@ static struct gpio_keys_button smba1002_keys[] = {
 		.type = EV_KEY,		
 		.desc = "back",
 	},*/
+	
 };
 
 
