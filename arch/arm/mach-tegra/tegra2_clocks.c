@@ -2484,13 +2484,13 @@ void __init tegra2_init_clocks(void)
 	tegra2_init_sku_limits();
 		
 }
-
+/*
 #ifdef CONFIG_CPU_FREQ
 
-/*
- * Frequency table index must be sequential starting at 0 and frequencies
- * must be ascending.
- */
+//
+ // Frequency table index must be sequential starting at 0 and frequencies
+ // must be ascending.
+ //
 
 static struct cpufreq_frequency_table freq_table_750MHz[] = {
 	{ 0, 216000 },
@@ -2549,7 +2549,7 @@ struct tegra_cpufreq_table_data *tegra_cpufreq_table_get(void)
 	BUG();
 	return &cpufreq_tables[0];
 }
-#endif
+#endif */
 
 #ifdef CONFIG_PM
 static u32 clk_rst_suspend[RST_DEVICES_NUM + CLK_OUT_ENB_NUM +
