@@ -118,13 +118,13 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     /* pll_x */
     { "pll_x", "clk_m", 456000000, true}, /* */
     { "cclk", "pll_x", 456000000, true},
-    { "cpu", NULL, 456000000, true},
+    { "cpu", "cclk", 456000000, true},
 
     /* Peripherals - Always on */
     { "csite", "pll_p", 144000000, true}, /* csite - coresite */ /* always on */
     { "timer", "clk_m", 12000000, true}, /* timer */ /* always on - no init req */
     { "rtc", "clk_32k", 32768, true}, /* rtc-tegra : must be always on */
-    { "kfuse", "clk_m", 12000000, false}, /* kfuse-tegra */ /* always on - no init req */
+    { "kfuse", "clk_m", 12000000, true}, /* kfuse-tegra */ /* always on - no init req */
 
     /* Peripherals - Turned on demand */
    { "3d", "pll_c", 400000000, false}, /* tegra_grhost, gr3d */
@@ -133,8 +133,8 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "epp", "pll_c", 300000000, false}, /* tegra_grhost */
 // { "mpe", "pll_c", 300000000, false}, /* tegra_grhost */
     { "mpe", "pll_m", 111000000, false}, /* tegra_grhost */
- { "host1x", "pll_p", 144000000, false}, /* tegra_grhost */
-//    { "host1x", "pll_p", 108000000, false}, /* tegra_grhost */
+// { "host1x", "pll_p", 144000000, false}, /* tegra_grhost */
+    { "host1x", "pll_p", 108000000, false}, /* tegra_grhost */
 
 // { "vi", "pll_c", 150000000, true}, /* tegra_camera */
     { "vi", "pll_m", 111000000, false}, /* tegra_camera */
@@ -150,7 +150,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "pcie_xclk", "clk_m", 12000000, false}, /* pcie controller */
 #endif
 
-    { "i2s1", "pll_a_out0", 2822400, true}, /* i2s.0 */
+    { "i2s1", "pll_a_out0", 2822400, false}, /* i2s.0 */
     { "i2s2", "clk_m", 12000000, false}, /* i2s.1 */
     { "audio", "pll_a_out0", 11289600, true},
     { "audio_2x", "audio", 22579200, false},
@@ -168,16 +168,16 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 #define CDEV2 "clk_dev2"
 #endif
 // { CDEV1, NULL /*"pll_a_out0"*/,11289600, false}, /* used as audio CODEC MCLK */
-    { CDEV1, NULL /*"pll_a_out0"*/,0, true}, /* used as audio CODEC MCLK */
+    { CDEV1, NULL,0, false}, /* used as audio CODEC MCLK */
 
 // { CDEV2, NULL, 26000000, false}, /* probably used as USB clock - perhaps 24mhz ?*/
     { CDEV2, NULL, 0, false}, /* probably used as USB clock - perhaps 24mhz ?*/
 
 
-    { "i2c1_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.0 */
-    { "i2c2_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.1 */
-    { "i2c3_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.2 */
-    { "dvc_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.3 */
+    { "i2c1_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.0 */
+    { "i2c2_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.1 */
+    { "i2c3_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.2 */
+    { "dvc_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.3 */
     { "i2c1", "clk_m", 800000, false}, /* tegra-i2c.0 */
     { "i2c2", "clk_m", 3000000, false}, /* tegra-i2c.1 */
     { "i2c3", "clk_m", 800000, false}, /* tegra-i2c.2 */
@@ -213,7 +213,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "vfir", "clk_m", 12000000, false},
 
     { "sdmmc1", "pll_p", 24000000, true}, /* sdhci-tegra.0 */
-    { "sdmmc2", "pll_p", 12000000, false}, /* sdhci-tegra.1 */
+    { "sdmmc2", "pll_m", 12000000, false}, /* sdhci-tegra.1 */
     { "sdmmc3", "pll_p", 48000000, false}, /* sdhci-tegra.2 */
     { "sdmmc4", "pll_p", 25411764, false}, /* sdhci-tegra.3 */
 
@@ -239,7 +239,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 
     { "pwm", "clk_m", 93385, true}, /* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 
-    { "kbc", "clk_32k", 32768, true}, /* tegra-kbc */
+    { "kbc", "clk_32k", 32768, false}, /* tegra-kbc */
     { "blink", "clk_32k", 32768, true}, /* used for bluetooth */
 
     { NULL, NULL, 0, 0},
