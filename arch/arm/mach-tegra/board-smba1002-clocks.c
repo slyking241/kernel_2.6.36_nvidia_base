@@ -93,8 +93,8 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "pll_c_out1", "pll_c", 120000000, true}, /* must be always on - system clock */
 
     { "sclk", "pll_p_out2", 108000000, true}, /* must be always on */
-    { "avp.sclk", "sclk", 108000000, false}, /* must be always on */
-    { "cop", NULL, 108000000, false}, /* must be always on */
+    { "avp.sclk", "sclk", 108000000, true}, /* must be always on */
+    { "cop", NULL, 108000000, true}, /* must be always on */
     { "hclk", "sclk", 108000000, true}, /* must be always on */
     { "pclk", "hclk", 54000000, true}, /* must be always on */
 //    { "pclk", "hclk", 108000000, true}, /* must be always on */
@@ -124,7 +124,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "csite", "pll_p", 144000000, true}, /* csite - coresite */ /* always on */
     { "timer", "clk_m", 12000000, true}, /* timer */ /* always on - no init req */
     { "rtc", "clk_32k", 32768, true}, /* rtc-tegra : must be always on */
-    { "kfuse", "clk_m", 12000000, false}, /* kfuse-tegra */ /* always on - no init req */
+    { "kfuse", "clk_m", 12000000, true}, /* kfuse-tegra */ /* always on - no init req */
 
     /* Peripherals - Turned on demand */
    { "3d", "pll_c", 400000000, false}, /* tegra_grhost, gr3d */
@@ -174,10 +174,10 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { CDEV2, NULL, 24000000, false}, /* probably used as USB clock - perhaps 24mhz ?*/
 
 
-    { "i2c1_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.0 */
-    { "i2c2_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.1 */
-    { "i2c3_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.2 */
-    { "dvc_i2c", "pll_p_out3", 72000000, false}, /* tegra-i2c.3 */
+    { "i2c1_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.0 */
+    { "i2c2_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.1 */
+    { "i2c3_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.2 */
+    { "dvc_i2c", "pll_p_out3", 72000000, true}, /* tegra-i2c.3 */
     { "i2c1", "clk_m", 800000, false}, /* tegra-i2c.0 */
     { "i2c2", "clk_m", 3000000, false}, /* tegra-i2c.1 */
     { "i2c3", "clk_m", 800000, false}, /* tegra-i2c.2 */
@@ -213,7 +213,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
     { "vfir", "clk_m", 12000000, false},
 
     { "sdmmc1", "pll_p", 24000000, true}, /* sdhci-tegra.0 */
-    { "sdmmc2", "pll_p", 12000000, false}, /* sdhci-tegra.1 */
+    { "sdmmc2", "pll_m", 12000000, false}, /* sdhci-tegra.1 */
     { "sdmmc3", "pll_p", 48000000, false}, /* sdhci-tegra.2 */
     { "sdmmc4", "pll_p", 25411764, false}, /* sdhci-tegra.3 */
 
@@ -239,7 +239,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 
     { "pwm", "clk_m", 93385, true}, /* tegra-pwm.0 tegra-pwm.1 tegra-pwm.2 tegra-pwm.3*/
 
-    { "kbc", "clk_32k", 32768, true}, /* tegra-kbc */
+    { "kbc", "clk_32k", 32768, false}, /* tegra-kbc */
     { "blink", "clk_32k", 32768, true}, /* used for bluetooth */
 
     { NULL, NULL, 0, 0},

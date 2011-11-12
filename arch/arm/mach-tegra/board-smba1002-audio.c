@@ -66,7 +66,7 @@ Codec MCLK = APxx DAP_MCLK1
 
 #if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
 static struct tegra_das_platform_data tegra_das_pdata = {
-    .dap_clk = "clk_dev1",
+    .dap_clk = "cdev1",
     .tegra_dap_port_info_table = {
         /* I2S1 <--> DAC1 <--> DAP1 <--> Hifi Codec */
         [0] = {
@@ -143,10 +143,10 @@ static struct tegra_das_platform_data tegra_das_pdata = {
             .num_entries = 2,
             .con_line = { /*src*/ /*dst*/ /* src master */
 #ifdef ALC5623_IS_MASTER
-                [0] = {tegra_das_port_i2s1, tegra_das_port_dap1, true},
-                      [1] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
+						[0] = {tegra_das_port_i2s1, tegra_das_port_dap1, true},
+                     	[1] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
 #else
-                [0] = {tegra_das_port_i2s1, tegra_das_port_dap1, false},
+               		  [0] = {tegra_das_port_i2s1, tegra_das_port_dap1, false},
                       [1] = {tegra_das_port_dap1, tegra_das_port_i2s1, true},
 #endif
                         },
@@ -159,10 +159,10 @@ static struct tegra_das_platform_data tegra_das_pdata = {
                       [1] = {tegra_das_port_dap4, tegra_das_port_i2s2, false},
 #ifdef ALC5623_IS_MASTER
                             [2] = {tegra_das_port_i2s1, tegra_das_port_dap1, true},
-                                  [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
+                            [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
 #else
                             [2] = {tegra_das_port_i2s1, tegra_das_port_dap1, false},
-                                  [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, true},
+                            [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, true},
 #endif
                                     },
                                 },
@@ -174,10 +174,10 @@ static struct tegra_das_platform_data tegra_das_pdata = {
                       [1] = {tegra_das_port_dap3, tegra_das_port_dap2, false},
 #ifdef ALC5623_IS_MASTER
                             [2] = {tegra_das_port_i2s1, tegra_das_port_dap1, true},
-                                  [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
+                            [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, false},
 #else
                             [2] = {tegra_das_port_i2s1, tegra_das_port_dap1, false},
-                                  [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, true},
+                            [3] = {tegra_das_port_dap1, tegra_das_port_i2s1, true},
 #endif
                                     },
                                 },
@@ -187,12 +187,10 @@ static struct tegra_das_platform_data tegra_das_pdata = {
 
 static struct tegra_audio_platform_data tegra_spdif_pdata = {
     .dma_on = true, /* use dma by default */
-#if LINUX_VERSION_CODE == KERNEL_VERSION(2,6,36)
 #ifdef SMBA1002_48KHZ_AUDIO
     .dev_clk_rate = 6144000,
 #else
     .dev_clk_rate = 5644800,
-#endif
 #endif
 };
 
@@ -203,7 +201,7 @@ static struct tegra_audio_platform_data tegra_audio_pdata[] = {
         .i2s_master = false, /* CODEC is master for audio */
         .dma_on = true, /* use dma by default */
         .i2s_clk_rate = 2822400,
-        .dap_clk = "clk_dev1",
+        .dap_clk = "cdev1",
         .audio_sync_clk = "audio_2x",
         .mode = I2S_BIT_FORMAT_I2S,
         .fifo_fmt = I2S_FIFO_16_LSB,
