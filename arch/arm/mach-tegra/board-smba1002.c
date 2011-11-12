@@ -529,7 +529,7 @@ TEGRA_WAKE_RTC_ALARM,
 .wake_high = TEGRA_WAKE_RTC_ALARM,
 .wake_low = SMBA1002_WAKE_KEY_POWER |
 SMBA1002_WAKE_KEY_RESUME,
-.wake_any = 1,
+.wake_any = 0,
 #endif
 };
 
