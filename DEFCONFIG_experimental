@@ -1,7 +1,7 @@
 #
 # Automatically generated make config: don't edit
 # Linux kernel version: 2.6.36.3
-# Sat Nov 12 10:26:45 2011
+# Mon Nov 14 21:41:07 2011
 #
 CONFIG_ARM=y
 CONFIG_HAVE_PWM=y
@@ -1389,7 +1389,7 @@ CONFIG_W1_MASTER_TEGRA=y
 # CONFIG_W1_SLAVE_BQ27000 is not set
 CONFIG_POWER_SUPPLY=y
 # CONFIG_POWER_SUPPLY_DEBUG is not set
-# CONFIG_PDA_POWER is not set
+CONFIG_PDA_POWER=y
 CONFIG_NVEC_POWER=y
 # CONFIG_TEST_POWER is not set
 # CONFIG_BATTERY_DS2760 is not set

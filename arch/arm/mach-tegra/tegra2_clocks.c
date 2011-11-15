@@ -1971,7 +1971,7 @@ static struct clk tegra_clk_cclk = {
 	.inputs	= mux_cclk,
 	.reg	= 0x20,
 	.ops	= &tegra_super_ops,
-	.max_rate = 1000000000,
+	.max_rate = 1200000000,
 };
 
 static struct clk tegra_clk_sclk = {
@@ -1980,15 +1980,15 @@ static struct clk tegra_clk_sclk = {
 	.reg	= 0x28,
 	.ops	= &tegra_super_ops,
 	.max_rate = 240000000,
-	.min_rate = 40000000,
+	.min_rate = 120000000,
 };
 
 static struct clk tegra_clk_virtual_cpu = {
 	.name      = "cpu",
 	.parent    = &tegra_clk_cclk,
 	.ops       = &tegra_cpu_ops,
-	.max_rate  = 1000000000,
-	.u.cpu = {
+	.max_rate  = 1200000000,
+	.u.cpu = {   
 		.main      = &tegra_pll_x,
 		.backup    = &tegra_pll_p,
 	},
@@ -2008,7 +2008,7 @@ static struct clk tegra_clk_hclk = {
 	.reg		= 0x30,
 	.reg_shift	= 4,
 	.ops		= &tegra_bus_ops,
-	.max_rate       = 240000000,
+	.max_rate   = 240000000,
 	.min_rate	= 36000000,
 };
 
@@ -2484,13 +2484,13 @@ void __init tegra2_init_clocks(void)
 	tegra2_init_sku_limits();
 		
 }
-/*
+
 #ifdef CONFIG_CPU_FREQ
 
-//
- // Frequency table index must be sequential starting at 0 and frequencies
- // must be ascending.
- //
+/*
+ * Frequency table index must be sequential starting at 0 and frequencies
+ * must be ascending.
+ */
 
 static struct cpufreq_frequency_table freq_table_750MHz[] = {
 	{ 0, 216000 },
@@ -2549,7 +2549,7 @@ struct tegra_cpufreq_table_data *tegra_cpufreq_table_get(void)
 	BUG();
 	return &cpufreq_tables[0];
 }
-#endif */
+#endif
 
 #ifdef CONFIG_PM
 static u32 clk_rst_suspend[RST_DEVICES_NUM + CLK_OUT_ENB_NUM +
