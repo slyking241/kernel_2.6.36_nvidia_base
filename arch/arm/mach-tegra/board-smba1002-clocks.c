@@ -136,7 +136,7 @@ static __initdata struct tegra_clk_init_table smba1002_clk_init_table[] = {
 
     /* Peripherals - Turned on demand */
 // { "3d", "pll_c", 300000000, false}, /* tegra_grhost, gr3d */
-    { "3d", "pll_c", 400000000, false}, /* tegra_grhost, gr3d */
+    { "3d", "pll_c", 333000000, false}, /* tegra_grhost, gr3d */
     { "2d", "pll_c", 300000000, false}, /* tegra_grhost, gr2d */
     { "epp", "pll_c", 300000000, false}, /* tegra_grhost */
 // { "mpe", "pll_c", 300000000, false}, /* tegra_grhost */
