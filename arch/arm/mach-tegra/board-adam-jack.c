@@ -34,7 +34,7 @@ static struct wired_jack_conf adam_wr_jack_conf = {
 	.en_mic_int = -1,
 	.en_spkr = ALC5623_GP0,
 	.cdc_irq = -1,
-//	.spkr_amp_reg = "avdd_amp"
+	.spkr_amp_reg = "avdd_amp"
 };
 
 static struct platform_device adam_hs_jack_device = {
