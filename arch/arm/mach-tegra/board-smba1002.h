@@ -28,7 +28,7 @@
 #define SMBA1002_KEY_VOLUMEDOWN 	TEGRA_GPIO_PV4 	/* 0=pressed */
 #define SMBA1002_KEY_POWER 		TEGRA_GPIO_PV2 	/* 0=pressed */
 //#define SMBA1002_KEY_RESUME 		TEGRA_GPIO_PV2 	/* 0=pressed */
-#define SMBA1002_KEY_BACK		TEGRA_GPIO_PH0	/* 0=pressed */
+//#define SMBA1002_KEY_BACK		TEGRA_GPIO_PH0	/* 0=pressed */
 
 /* #define SMBA1002_EMC_SAMSUNG		*/
 /* #define SMBA1002_EMC_ELPIDA50NM	*/
