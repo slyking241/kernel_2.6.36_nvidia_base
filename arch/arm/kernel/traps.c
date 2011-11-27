@@ -524,9 +524,15 @@ asmlinkage int arm_syscall(int no, struct pt_regs *regs)
 		if (tls_emu)
 			return 0;
 		if (has_tls_reg) {
+#if defined(CONFIG_TEGRA_ERRATA_657451)
+			BUG_ON(regs->ARM_r0 & 0x1);
+			asm ("mcr p15, 0, %0, c13, c0, 3"
+				: : "r" ((regs->ARM_r0) | ((regs->ARM_r0>>20) & 0x1)));
+#else
 			asm ("mcr p15, 0, %0, c13, c0, 3"
 				: : "r" (regs->ARM_r0));
-		} /*else*/ {
+#endif
+		} /* else */ {
 			/*
 			 * User space must never try to access this directly.
 			 * Expect your app to break eventually if you do so.

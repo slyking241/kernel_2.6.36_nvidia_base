@@ -736,6 +736,10 @@ ENTRY(__switch_to)
 #ifdef CONFIG_MMU
 	ldr	r6, [r2, #TI_CPU_DOMAIN]
 #endif
+#if defined(CONFIG_TEGRA_ERRATA_657451)
+	and     r4, r3, #(1<<20)
+	orr     r3, r3, r4, lsr #20
+#endif
 	set_tls	r3, r4, r5
 #if defined(CONFIG_CC_STACKPROTECTOR) && !defined(CONFIG_SMP)
 	ldr	r7, [r2, #TI_TASK]
@@ -1009,10 +1013,18 @@ kuser_cmpxchg_fixup:
  */
 
 __kuser_get_tls:				@ 0xffff0fe0
+#if defined(CONFIG_TEGRA_ERRATA_657451)
+	bfi     r0, r0, #20, #1
+	bic     r0, r0, #1
+#endif
 	ldr	r0, [pc, #(16 - 8)]	@ read TLS, set in kuser_get_tls_init
 	usr_ret	lr
 	mrc	p15, 0, r0, c13, c0, 3	@ 0xffff0fe8 hardware TLS code
+#if defined(CONFIG_TEGRA_ERRATA_657451)
+	.rep	2
+#else
 	.rep	4
+#endif
 	.word	0			@ 0xffff0ff0 software TLS value, then
 	.endr				@ pad up to __kuser_helper_version
 
