@@ -92,7 +92,7 @@ typedef const struct si_pub  si_t;
 #include <linux/mutex.h>
 
 #define WL_IW_USE_ISCAN  1
-#define ENABLE_ACTIVE_PASSIVE_SCAN_SUPPRESS  1
+#define ENABLE_ACTIVE_PASSIVE_SCAN_SUPPRESS  0
 
 #if defined(SOFTAP)
 #define WL_SOFTAP(x) printk x
