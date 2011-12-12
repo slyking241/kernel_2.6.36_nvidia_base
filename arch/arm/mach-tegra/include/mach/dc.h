@@ -58,7 +58,6 @@ enum {
 	TEGRA_DSI_VIDEO_CLOCK_TX_ONLY,
 };
 
-#if !defined(CONFIG_ICS)
 /* DSI burst mode setting in video mode */
 enum {
 	TEGRA_DSI_VIDEO_NONE_BURST_MODE,
@@ -70,20 +69,10 @@ enum {
 	TEGRA_DSI_VIDEO_BURST_MODE_FASTEST_SPEED,
 	TEGRA_DSI_VIDEO_BURST_MODE_MANUAL,
 };
-#else
+
 /* DSI burst mode setting in video mode. Each mode is assigned with a
  * fixed value. The rationale behind this is to avoid change of these
  * values, since the calculation of dsi clock depends on them. */
-enum {
-        TEGRA_DSI_VIDEO_NONE_BURST_MODE = 0,
-        TEGRA_DSI_VIDEO_NONE_BURST_MODE_WITH_SYNC_END = 1,
-        TEGRA_DSI_VIDEO_BURST_MODE_LOWEST_SPEED = 2,
-        TEGRA_DSI_VIDEO_BURST_MODE_LOW_SPEED = 3,
-        TEGRA_DSI_VIDEO_BURST_MODE_MEDIUM_SPEED = 4,
-        TEGRA_DSI_VIDEO_BURST_MODE_FAST_SPEED = 5,
-        TEGRA_DSI_VIDEO_BURST_MODE_FASTEST_SPEED = 6,
-};
-#endif
 
 enum {
 	TEGRA_DSI_PACKET_CMD,
@@ -139,19 +128,19 @@ struct tegra_dsi_out {
 	u8		pixel_format;			/* required*/
 	u8		refresh_rate;			/* required*/
 	u8		virtual_channel;		/* required*/
-#if defined(CONFIG_ICS)
+
         u8              panel_reset;                    /* required */
         u8              dsi_instance;
         u8              chip_id;
         u8              chip_rev;
-#endif
+
 
 	bool		panel_has_frame_buffer;	/* required*/
 
 	struct tegra_dsi_cmd*	dsi_init_cmd;		/* required*/
 	u16		n_init_cmd;			/* required*/
 
-#if defined(CONFIG_ICS)
+
         struct tegra_dsi_cmd*   dsi_early_suspend_cmd;
         u16             n_early_suspend_cmd;
 
@@ -160,7 +149,7 @@ struct tegra_dsi_out {
 
         struct tegra_dsi_cmd*   dsi_suspend_cmd;        /* required */
         u16             n_suspend_cmd;                  /* required */
-#endif
+
 
 	u8		video_data_type;		/* required*/
 	u8		video_clock_mode;
@@ -172,26 +161,26 @@ struct tegra_dsi_out {
 	bool		hs_cmd_mode_supported;
 	bool		hs_cmd_mode_on_blank_supported;
 	bool		enable_hs_clock_on_lp_cmd_mode;
-#if defined(CONFIG_ICS)
+
         bool            no_pkt_seq_eot; /* 1st generation panel may not
                                          * support eot. Don't set it for
                                          * most panels. */
         bool            te_polarity_low;
         bool            power_saving_suspend;
-#endif
+
 
 	u32 		max_panel_freq_khz;
 	u32 		lp_cmd_mode_freq_khz;
-#if defined(CONFIG_ICS)
+
         u32             lp_read_cmd_mode_freq_khz;
-#endif
+
 	u32		hs_clk_in_lp_cmd_mode_freq_khz;
 	u32		burst_mode_freq_khz;
 
 	struct dsi_phy_timing_ns phy_timing;
 };
 
-#if defined(CONFIG_ICS)
+
 enum {
         TEGRA_DC_STEREO_MODE_2D,
         TEGRA_DC_STEREO_MODE_3D
@@ -209,7 +198,7 @@ struct tegra_stereo_out {
         void (*set_mode)(int mode);
         void (*set_orientation)(int orientation);
 };
-#endif
+
 
 struct tegra_dc_mode {
 	int	pclk;
@@ -286,9 +275,9 @@ struct tegra_dc_out {
 
 	int			dcc_bus;
 	int			hotplug_gpio;
-#if defined(CONFIG_ICS)
+
         const char                      *parent_clk;
-#endif
+
 
 	unsigned		max_pixclock;
 	unsigned		order;
@@ -303,16 +292,16 @@ struct tegra_dc_out {
 	int			n_modes;
 
 	struct tegra_dsi_out	*dsi;
-#if defined(CONFIG_ICS)
+
         struct tegra_stereo_out         *stereo;
-#endif
+
 
 	struct tegra_dc_out_pin	*out_pins;
 	unsigned		n_out_pins;
 
-#if defined(CONFIG_ICS)
+
 	struct tegra_dc_sd_settings     *sd_settings;
-#endif
+
 
 	u8			*out_sel_configs;
 	unsigned		n_out_sel_configs;
@@ -329,11 +318,11 @@ struct tegra_dc_out {
 #define TEGRA_DC_OUT_NVHDCP_POLICY_ALWAYS_ON	(0 << 2)
 #define TEGRA_DC_OUT_NVHDCP_POLICY_ON_DEMAND	(1 << 2)
 #define TEGRA_DC_OUT_NVHDCP_POLICY_MASK		(1 << 2)
-#if defined(CONFIG_ICS)
+
 #define TEGRA_DC_OUT_CONTINUOUS_MODE            (0 << 3)
 #define TEGRA_DC_OUT_ONE_SHOT_MODE              (1 << 3)
 #define TEGRA_DC_OUT_N_SHOT_MODE                (1 << 4)
-#endif
+
 
 #define TEGRA_DC_ALIGN_MSB		0
 #define TEGRA_DC_ALIGN_LSB		1
@@ -344,7 +333,7 @@ struct tegra_dc_out {
 struct tegra_dc;
 struct nvmap_handle_ref;
 
-#if defined(CONFIG_ICS)
+
 struct tegra_dc_csc {
         unsigned short yof;
         unsigned short kyrgb;
@@ -362,66 +351,55 @@ struct tegra_dc_lut {
         u8 g[256];
         u8 b[256];
 };
-#endif
+
 
 struct tegra_dc_win {
 	u8			idx;
 	u8			fmt;
-#if defined(CONFIG_ICS)
+
         u8                      ppflags; /* see TEGRA_WIN_PPFLAG* */
-#endif
+
 	u32			flags;
 
 	void			*virt_addr;
 	dma_addr_t		phys_addr;
-#if defined(CONFIG_ICS)
+
         dma_addr_t              phys_addr_u;
         dma_addr_t              phys_addr_v;
-#else
-	unsigned		offset;
-	unsigned		offset_u;
-	unsigned		offset_v;
-#endif
+
 	unsigned		stride;
 	unsigned		stride_uv;
-#if !defined(CONFIG_ICS)
+
 	unsigned		x;
 	unsigned		y;
 	unsigned		w;
 	unsigned		h;
-#else
-        fixed20_12              x;
-        fixed20_12              y;
-        fixed20_12              w;
-        fixed20_12              h;
-#endif
 	unsigned		out_x;
 	unsigned		out_y;
 	unsigned		out_w;
 	unsigned		out_h;
 	unsigned		z;
 
-#if defined(CONFIG_ICS)
+
 	struct tegra_dc_csc     csc;
-#endif
+
 
 	int			dirty;
 	int			underflows;
 	struct tegra_dc		*dc;
 
 	struct nvmap_handle_ref	*cur_handle;
-#if defined(CONFIG_ICS)
+
         unsigned                bandwidth;
         unsigned                new_bandwidth;
         struct tegra_dc_lut     lut;
-#endif
 };
 
 
-#if defined(CONFIG_ICS)
+
 #define TEGRA_WIN_PPFLAG_CP_ENABLE      (1 << 0) /* enable RGB color lut */
 #define TEGRA_WIN_PPFLAG_CP_FBOVERRIDE  (1 << 1) /* override fbdev color lut */
-#endif
+
 
 #define TEGRA_WIN_FLAG_ENABLED		(1 << 0)
 #define TEGRA_WIN_FLAG_BLEND_PREMULT	(1 << 1)
@@ -430,19 +408,12 @@ struct tegra_dc_win {
 #define TEGRA_WIN_FLAG_INVERT_V		(1 << 4)
 #define TEGRA_WIN_FLAG_TILED		(1 << 5)
 
-#if defined(CONFIG_TOUCHWIZ_UX) || defined(CONFIG_ICS)
-#define TEGRA_WIN_FLAG_INVERT_H		(1 << 3)
-#define TEGRA_WIN_FLAG_INVERT_V		(1 << 4)
-#define TEGRA_WIN_FLAG_TILED		(1 << 5)
-#else
+
 #define TEGRA_WIN_FLAG_TILED            (1 << 3)
-#endif
-#if defined(CONFIG_ICS)
+
+
 #define TEGRA_WIN_FLAG_H_FILTER         (1 << 6)
 #define TEGRA_WIN_FLAG_V_FILTER         (1 << 7)
-#endif
->>>>>>> dc96f7b... drivers: video: tegra-ics: backport dc and fb from nvidia-2.6.39
-
 #define TEGRA_WIN_BLEND_FLAGS_MASK \
 	(TEGRA_WIN_FLAG_BLEND_PREMULT | TEGRA_WIN_FLAG_BLEND_COVERAGE)
 
@@ -495,24 +466,19 @@ struct tegra_dc_platform_data {
 
 struct tegra_dc *tegra_dc_get_dc(unsigned idx);
 struct tegra_dc_win *tegra_dc_get_window(struct tegra_dc *dc, unsigned win);
-#if defined(CONFIG_ICS)
+
 bool tegra_dc_get_connected(struct tegra_dc *);
 
 void tegra_dc_blank(struct tegra_dc *dc);
-#endif
+
 
 void tegra_dc_enable(struct tegra_dc *dc);
 void tegra_dc_disable(struct tegra_dc *dc);
 
-#if !defined(CONFIG_ICS)
+
 u32 tegra_dc_get_syncpt_id(const struct tegra_dc *dc);
 u32 tegra_dc_incr_syncpt_max(struct tegra_dc *dc);
 void tegra_dc_incr_syncpt_min(struct tegra_dc *dc, u32 val);
-#else
-u32 tegra_dc_get_syncpt_id(const struct tegra_dc *dc, int i);
-u32 tegra_dc_incr_syncpt_max(struct tegra_dc *dc, int i);
-void tegra_dc_incr_syncpt_min(struct tegra_dc *dc, int i, u32 val);
-#endif
 
 /* tegra_dc_update_windows and tegra_dc_sync_windows do not support windows
  * with differenct dcs in one call
@@ -521,11 +487,11 @@ int tegra_dc_update_windows(struct tegra_dc_win *windows[], int n);
 int tegra_dc_sync_windows(struct tegra_dc_win *windows[], int n);
 
 int tegra_dc_set_mode(struct tegra_dc *dc, const struct tegra_dc_mode *mode);
-#if defined(CONFIG_ICS)
+
 struct fb_videomode;
 int tegra_dc_set_fb_mode(struct tegra_dc *dc, const struct fb_videomode *fbmode,
         bool stereo_mode);
-#endif
+
 
 unsigned tegra_dc_get_out_height(const struct tegra_dc *dc);
 unsigned tegra_dc_get_out_width(const struct tegra_dc *dc);
