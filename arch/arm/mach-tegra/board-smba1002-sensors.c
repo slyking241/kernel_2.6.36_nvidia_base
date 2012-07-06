@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Eduardo José Tagle <ejtagle@tutopia.com> 
+ * Copyright (C) 2011 Eduardo JosÃ© Tagle <ejtagle@tutopia.com> 
 	 *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,38 +23,66 @@
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
 #include <linux/gpio.h>
+#include <linux/adt7461.h>
+#include <linux/power/bq20z75.h>
 
 #include "board-smba1002.h"
 #include "gpio-names.h"
+#include "cpu-tegra.h"
 
+static struct bq20z75_platform_data smba1002_bq20z75_pdata = {
+	.battery_detect = TEGRA_GPIO_PH2,
+	.battery_detect_present = 1,
+	.i2c_retry_count = 5,
+};
 static struct i2c_board_info __initdata smba1002_i2c_bus0_sensor_info[] = {
 	{
 		I2C_BOARD_INFO("bq20z75-battery", 0x0B),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PH2),
+		.platform_data = &smba1002_bq20z75_pdata,
 	},
-};
-static struct i2c_board_info __initdata smba1002_i2c_bus2_sensor_info[] = {
 
+};
+
+static struct i2c_board_info __initdata smba1002_i2c_bus2_sensor_info[] = {
 	{
 		I2C_BOARD_INFO("so340010_kbd", 0x2c),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV6),
-	},	{
-	I2C_BOARD_INFO("isl29023", 0x44),
-		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV5),
-	},
-	
+	},	
 	{
 		I2C_BOARD_INFO("lis3lv02d", 0x1C),
 		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PJ0),
 	},
+	{
+			I2C_BOARD_INFO("isl29023", 0x44),
+		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PV5),
+
+	},   
+
+	
 };
+
+static struct adt7461_platform_data smba1002_adt7461_pdata = {
+	.supported_hwrev = true,
+	.ext_range = false,
+	.therm2 = true,
+	.conv_rate = 0x05,
+	.offset = 0,
+	.hysteresis = 0,
+	.shutdown_ext_limit = 115,
+	.shutdown_local_limit = 120,
+	.throttling_ext_limit = 90,
+	.alarm_fn = tegra_throttling_enable,
+};
+
 
 static struct i2c_board_info __initdata smba1002_i2c_bus4_sensor_info[] = {
 	{
 		I2C_BOARD_INFO("adt7461", 0x4C),
-		.irq = TEGRA_GPIO_TO_IRQ(TEGRA_GPIO_PN6),
-		},
-};		
+		.irq = TEGRA_GPIO_TO_IRQ(SMBA1002_TEMP_ALERT),
+		.platform_data = &smba1002_adt7461_pdata,
+	},
+};
 
 int __init smba1002_sensors_register_devices(void)
 {
@@ -66,19 +94,22 @@ int __init smba1002_sensors_register_devices(void)
 	gpio_request(TEGRA_GPIO_PH2, "ac_present_irq");
 	gpio_direction_input(TEGRA_GPIO_PH2);
 
-	 tegra_gpio_enable(TEGRA_GPIO_PJ0);
+	tegra_gpio_enable(TEGRA_GPIO_PJ0);
 	gpio_request(TEGRA_GPIO_PJ0, "lis33de_irq");
 	gpio_direction_input(TEGRA_GPIO_PJ0);
 
 	tegra_gpio_enable(TEGRA_GPIO_PV6);
 	gpio_request(TEGRA_GPIO_PV6, "so340010_kbd_irq");
 	gpio_direction_input(TEGRA_GPIO_PV6);
+	
+		tegra_gpio_enable(SMBA1002_TEMP_ALERT);
+	gpio_request(SMBA1002_TEMP_ALERT, "adt7461_temp_alert_irq");
+	gpio_direction_input(SMBA1002_TEMP_ALERT);
 
-	 
 	i2c_register_board_info(0, smba1002_i2c_bus0_sensor_info,
 	                        ARRAY_SIZE(smba1002_i2c_bus0_sensor_info));
-	i2c_register_board_info(2, smba1002_i2c_bus2_sensor_info,
-	                        ARRAY_SIZE(smba1002_i2c_bus2_sensor_info));
-   	return i2c_register_board_info(4, smba1002_i2c_bus4_sensor_info,
-	                               ARRAY_SIZE(smba1002_i2c_bus4_sensor_info));
+	i2c_register_board_info(4, smba1002_i2c_bus4_sensor_info,
+	                        ARRAY_SIZE(smba1002_i2c_bus4_sensor_info));
+	return i2c_register_board_info(2, smba1002_i2c_bus2_sensor_info,
+	                               ARRAY_SIZE(smba1002_i2c_bus2_sensor_info));
 }
