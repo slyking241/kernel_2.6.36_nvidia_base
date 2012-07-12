@@ -1,7 +1,7 @@
 /*
  * arch/arm/mach-tegra/board-smba1002.h
  *
- * Copyright (C) 2011 Eduardo José Tagle <ejtagle@tutopia.com>
+ * Copyright (C) 2011 Eduardo Josï¿½ Tagle <ejtagle@tutopia.com>
  *
  * This software is licensed under the terms of the GNU General Public
  * License version 2, as published by the Free Software Foundation, and
@@ -61,7 +61,7 @@
 
 /*#define SMBA1002_GPU_MEM_SIZE 	SZ_128M*/		/* Memory reserved for GPU */
 /*#define SMBA1002_GPU_MEM_SIZE 	SZ_64M*/		/* Memory reserved for GPU */
-#define SMBA1002_GPU_MEM_SIZE 	(45*SZ_2M)		/* Memory reserved for GPU */
+#define SMBA1002_GPU_MEM_SIZE 	(SZ_128M) 		/* Memory reserved for GPU */
 
 #define SMBA1002_FB1_MEM_SIZE 	SZ_4M			/* Memory reserved for Framebuffer 1: LCD */
 #define SMBA1002_FB2_MEM_SIZE 	SZ_2M			/* Memory reserved for Framebuffer 2: HDMI out */
